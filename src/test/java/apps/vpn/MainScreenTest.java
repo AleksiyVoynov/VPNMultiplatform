@@ -4,7 +4,7 @@ import apps.BaseTest;
 import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.vpn.MainScreen;
+import pages.apps.vpn.MainScreen;
 
 import java.time.Duration;
 

@@ -1,4 +1,4 @@
-package pages.vpn;
+package pages.apps.vpn;
 
 import configs.Config;
 import io.qameta.allure.Step;
