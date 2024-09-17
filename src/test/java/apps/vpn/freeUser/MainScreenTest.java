@@ -1,7 +1,9 @@
-package apps.vpn;
+package apps.vpn.freeUser;
 
 import apps.BaseTest;
 import io.qameta.allure.Description;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.apps.vpn.MainScreen;
@@ -17,8 +19,9 @@ public class MainScreenTest extends BaseTest {
             2. parsing page elements
             3. validate result""")
     public void validationElements() {
-        MainScreen mainScreen = new MainScreen(config);
-        mainScreen.fluentVisibility(mainScreen.connectButton ,Duration.ofSeconds(60)).click();
+        MainScreen mainScreen = new MainScreen(appiumDriver);
+        WebElement element = mainScreen.fluentVisibility(mainScreen.connectButton ,Duration.ofSeconds(60));
         Assert.fail();
+        
     }
 }

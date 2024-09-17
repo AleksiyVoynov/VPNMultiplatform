@@ -5,6 +5,7 @@ public abstract class App {
     public String appPackage;
     public String appActivity;
     public String name;
+    public String webView;
 
     @Override
     public String toString() {

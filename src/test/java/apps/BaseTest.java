@@ -1,5 +1,6 @@
 package apps;
 
+import common.Contexts;
 import configs.Config;
 import configs.app.App;
 import configs.app.MultiPlatformVPN;
@@ -35,8 +36,8 @@ public class BaseTest implements IHookable {
             new MultiPlatformVPN());
     protected Config config;
     public AppiumDriver appiumDriver;
-    private final boolean recordingVideo = false;
-    private boolean testIsThrowable = false;
+    private final boolean recordingVideo = true;
+    private boolean testIsThrowable = true;
 
     @BeforeClass
     @Step("setting up appium driver")
@@ -58,22 +59,24 @@ public class BaseTest implements IHookable {
         if (device instanceof Android) {
             AndroidConfig androidConfig = new AndroidConfig();
             androidConfig.initDriver(device);
-            config = new Config(androidConfig.android, device);
+            config = new Config(device);
+            appiumDriver = androidConfig.android;
         } else if (device instanceof IOS) {
             IOSConfig iosConfig = new IOSConfig();
             iosConfig.initDriver(device);
-            config = new Config(iosConfig.ios, device);
+            config = new Config(device);
+            appiumDriver = iosConfig.ios;
         } else {
             Assert.fail("unknown device platform");
         }
-        config.appiumDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
-        appiumDriver = config.appiumDriver;
+        appiumDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
+        new Contexts(config, appiumDriver).nativeContext();
     }
 
     @AfterClass
     @Step("tearing down appium driver")
     protected void tearDown() {
-        config.appiumDriver.quit();
+        appiumDriver.quit();
     }
 
     @Override
@@ -149,7 +152,7 @@ public class BaseTest implements IHookable {
 
     @Attachment(value = "Failure in method {0}", type = "image/png")
     private byte[] takeScreenShot(String ignoredMethodName) {
-        return config.appiumDriver.getScreenshotAs(OutputType.BYTES);
+        return appiumDriver.getScreenshotAs(OutputType.BYTES);
     }
 
     private App getApp(String name) {
