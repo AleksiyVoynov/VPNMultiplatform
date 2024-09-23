@@ -7,7 +7,7 @@
         <parameter name="uDID" value="R52R301FPHA"/>
         <parameter name="app" value="VPNMultiplatform"/>
         <classes>
-            <class name="apps.vpn.freeUser.MainScreenTest"/>
+            <class name="apps.vpn.freeUser.Temp"/>
         </classes>
     </test>
 </suite>

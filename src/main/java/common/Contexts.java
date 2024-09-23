@@ -15,10 +15,18 @@ public class Contexts {
 
     private Config config;
     private AppiumDriver appiumDriver;
+    private String webViewContext;
 
     public Contexts(Config config, AppiumDriver appiumDriver) {
         this.config = config;
         this.appiumDriver = appiumDriver;
+        this.webViewContext = config.device.app.webView;
+    }
+
+    public Contexts(Config config, AppiumDriver appiumDriver, String webView) {
+        this.config = config;
+        this.appiumDriver = appiumDriver;
+        this.webViewContext = webView;
     }
 
     public void webViewContext() {

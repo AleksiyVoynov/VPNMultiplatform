@@ -13,7 +13,7 @@ import pages.BasePage;
 import java.util.List;
 
 public class MainScreen extends BasePage {
-    public final By menuButton = By.id("com.free.vpn.super.hotspot.open:id/btnMenu");
+    public Menu menu;
     public final By crownButton = By.id("com.free.vpn.super.hotspot.open:id/btnPremium");
     public final By locationButton = By.id("com.free.vpn.super.hotspot.open:id/btnLocation");
     public final By browserButton = By.id("com.free.vpn.super.hotspot.open:id/btnBrowser");
@@ -28,6 +28,7 @@ public class MainScreen extends BasePage {
 
     public MainScreen(AppiumDriver appiumDriver) {
         super(appiumDriver);
+        menu = new Menu(appiumDriver);
     }
 
     @Step("make search {0}")

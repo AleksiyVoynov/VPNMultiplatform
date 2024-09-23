@@ -8,7 +8,8 @@ import org.openqa.selenium.By;
 import pages.BasePage;
 
 public class Menu extends BasePage {
-    public final By menuButton = By.id("");
+    public final By menuButton = By.id("com.free.vpn.super.hotspot.open:id/btnMenu");
+    public final By signIn = By.id("com.free.vpn.super.hotspot.open:id/menu_sign_in_button");
 
     public final By myAccount = AppiumBy.androidUIAutomator("new UiSelector().text(\"My Account\")");
     public final By share = AppiumBy.androidUIAutomator("new UiSelector().text(\"Share\")");

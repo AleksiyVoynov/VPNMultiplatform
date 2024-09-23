@@ -5,6 +5,7 @@ import common.Contexts;
 import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.apps.vpn.LogIn;
 import pages.banners.Banner;
 import pages.banners.ReNewNowBanner;
 import pages.apps.vpn.MainScreen;
@@ -22,11 +23,9 @@ public class MyAccountTest extends BaseTest {
             3. validate page elements""")
     public void validationElements() {
         MainScreen mainScreen = new MainScreen(appiumDriver);
-        Menu menu = new Menu(appiumDriver);
-        new Contexts(config, appiumDriver).webViewContext();
-        mainScreen.fluentVisibility(mainScreen.menuButton ,Duration.ofSeconds(3)).click();
-        Banner banner = new ReNewNowBanner(appiumDriver);
-        appiumDriver.findElement(menu.myAccount).click();
+        mainScreen.fluentVisibility(mainScreen.menu.menuButton ,Duration.ofSeconds(20)).click();
+        appiumDriver.findElement(mainScreen.menu.signIn).click();
+        new LogIn(config, appiumDriver).logIn("nagaraju.batchu7+webExpiredMonthly@gmail.com", "Test@123");
         Assert.fail();
     }
 }
