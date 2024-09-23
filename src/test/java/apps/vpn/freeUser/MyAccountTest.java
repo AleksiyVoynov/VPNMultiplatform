@@ -25,7 +25,7 @@ public class MyAccountTest extends BaseTest {
         MainScreen mainScreen = new MainScreen(appiumDriver);
         mainScreen.fluentVisibility(mainScreen.menu.menuButton ,Duration.ofSeconds(20)).click();
         appiumDriver.findElement(mainScreen.menu.signIn).click();
-        new LogIn(config, appiumDriver).logIn("nagaraju.batchu7+webExpiredMonthly@gmail.com", "Test@123");
+        new LogIn(config, appiumDriver).logIn("nagaraju.batchu7+iOSYearlyExpired@gmail.com", "Test@123");
         Assert.fail();
     }
 }

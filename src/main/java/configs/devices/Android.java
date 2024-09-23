@@ -16,11 +16,9 @@ public class Android extends Device {
         this.platformVersion = version;
         this.uDID = uDID;
 
-        DesiredCapabilities cap = new DesiredCapabilities();
-        cap.setCapability("appium:automationName", "UiAutomator2");
-        cap.setCapability("appium:platformVersion", platformVersion);
-        cap.setCapability("appium:udid", uDID);
-        cap.setCapability("appium:deviceName", name);
-        this.capabilities = cap;
+        this.capabilities.setCapability("appium:automationName", "UiAutomator2");
+        this.capabilities.setCapability("appium:platformVersion", platformVersion);
+        this.capabilities.setCapability("appium:udid", uDID);
+        this.capabilities.setCapability("appium:deviceName", name);
     }
 }

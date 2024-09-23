@@ -30,9 +30,9 @@ import java.util.Base64;
 public class BaseTest implements IHookable {
     private Device device = new Android(
             "SAMSUNG",
-            "SM-T875",
-            "13",
-            "R52R301FPHA",
+            "SSM-A356B",
+            "14",
+            "R5CX72VNK6H",
             new MultiPlatformVPN());
     protected Config config;
     public AppiumDriver appiumDriver;

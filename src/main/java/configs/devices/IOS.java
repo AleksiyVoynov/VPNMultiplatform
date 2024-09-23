@@ -14,13 +14,11 @@ public class IOS extends Device {
         this.platformVersion = version;
         this.uDID = uDID;
 
-        DesiredCapabilities cap = new DesiredCapabilities();
-        cap.setCapability("appium:platformVersion", platformVersion);
-        cap.setCapability("appium:udid", uDID);
-        cap.setCapability("appium:deviceName", name);
-        cap.setCapability("appium:xcodeSigningId", "iPhone Developer");
-        cap.setCapability("appium:forceSimulatorSoftwareKeyboardPresence", true);
-        cap.setCapability("appium:xcodeOrgId", xcodeOrgId);
-        this.capabilities = cap;
+        this.capabilities.setCapability("appium:platformVersion", platformVersion);
+        this.capabilities.setCapability("appium:udid", uDID);
+        this.capabilities.setCapability("appium:deviceName", name);
+        this.capabilities.setCapability("appium:xcodeSigningId", "iPhone Developer");
+        this.capabilities.setCapability("appium:forceSimulatorSoftwareKeyboardPresence", true);
+        this.capabilities.setCapability("appium:xcodeOrgId", xcodeOrgId);
     }
 }

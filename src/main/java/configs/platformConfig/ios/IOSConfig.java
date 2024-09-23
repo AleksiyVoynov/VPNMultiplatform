@@ -26,7 +26,6 @@ public class IOSConfig {
         device.capabilities.setCapability("appium:usePrebuiltWDA", true);
         device.capabilities.setCapability("appium:noReset", true);
         device.capabilities.setCapability("appium:fullReset", false);
-        device.capabilities.setCapability("appium:webviewConnectTimeout", 5000);
 
         device.capabilities.setCapability("appium:wdaLocalPort", appiumConfig.IOSWDPort);
         device.capabilities.setCapability("appium:derivedDataPath", findWebDriverAgentPath());

@@ -12,7 +12,12 @@ public abstract class Device {
     public String name;
     public String platformVersion;
     public String uDID;
-    public DesiredCapabilities capabilities;
+    public DesiredCapabilities capabilities = new DesiredCapabilities();
+
+    public Device() {
+        this.capabilities.setCapability("appium:autoWebview", true);
+        this.capabilities.setCapability("appium:autoWebviewTimeout", 300);
+    }
 
     @Override
     public String toString() {

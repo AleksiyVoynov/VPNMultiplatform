@@ -31,9 +31,9 @@ public class Contexts {
 
     public void webViewContext() {
         if (config.device instanceof Android) {
-            ((SupportsContextSwitching) appiumDriver).context(config.device.app.webView);
+            ((SupportsContextSwitching) appiumDriver).context(webViewContext);
         } else if (config.device instanceof IOS) {
-            ((SupportsContextSwitching) appiumDriver).context(config.device.app.webView);
+            ((SupportsContextSwitching) appiumDriver).context(webViewContext);
         }
     }
     public List<String> getContext() {
