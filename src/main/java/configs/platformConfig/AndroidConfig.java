@@ -1,4 +1,4 @@
-package configs.platformConfig.android;
+package configs.platformConfig;
 
 
 import configs.AppiumConfig;

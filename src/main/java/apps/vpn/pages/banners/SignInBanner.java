@@ -1,4 +1,4 @@
-package pages.banners;
+package apps.vpn.pages.banners;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;

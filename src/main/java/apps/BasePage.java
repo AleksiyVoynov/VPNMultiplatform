@@ -1,4 +1,4 @@
-package pages;
+package apps;
 
 import driver.CustomDriver;
 import io.appium.java_client.AppiumDriver;

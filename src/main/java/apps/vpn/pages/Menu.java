@@ -1,9 +1,9 @@
-package pages.apps.vpn;
+package apps.vpn.pages;
 
 import driver.CustomDriver;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.By;
-import pages.BasePage;
+import apps.BasePage;
 
 public class Menu extends BasePage {
     public final By menuButton = By.id("com.free.vpn.super.hotspot.open:id/btnMenu");

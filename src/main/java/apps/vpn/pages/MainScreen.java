@@ -1,10 +1,10 @@
-package pages.apps.vpn;
+package apps.vpn.pages;
 
 import driver.CustomDriver;
 import io.appium.java_client.AppiumBy;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import pages.BasePage;
+import apps.BasePage;
 
 public class MainScreen extends BasePage {
     public Menu menu;

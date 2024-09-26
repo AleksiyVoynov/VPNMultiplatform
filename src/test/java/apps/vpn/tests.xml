@@ -2,9 +2,9 @@
 <suite name="Test Suite">
     <test name="Android Test">
         <parameter name="deviceName" value="SAMSUNG"/>
-        <parameter name="model" value="SM-T875"/>
-        <parameter name="version" value="13"/>
-        <parameter name="uDID" value="R52R301FPHA"/>
+        <parameter name="model" value="SSM-A356B"/>
+        <parameter name="version" value="14"/>
+        <parameter name="uDID" value="R5CX72VNK6H"/>
         <parameter name="app" value="VPNMultiplatform"/>
         <classes>
             <class name="apps.vpn.freeUser.Temp"/>

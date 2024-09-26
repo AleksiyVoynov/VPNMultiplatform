@@ -1,4 +1,4 @@
-package configs.platformConfig.ios;
+package configs.platformConfig;
 
 import configs.AppiumConfig;
 import configs.devices.Device;

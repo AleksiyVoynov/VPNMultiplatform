@@ -54,12 +54,6 @@ dependencies {
 
 test {
     ignoreFailures = true
-    useTestNG()
-    jvmArgs = [ "-javaagent:${configurations.agent.singleFile}" ]
-}
-
-tasks.register('parallelTest', Test) {
-    ignoreFailures = true
     useTestNG() {
         suites "src/test/java/apps/vpn/tests.xml"
     }

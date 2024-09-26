@@ -2,7 +2,12 @@ package apps.vpn.freeUser;
 
 import apps.BaseTest;
 import io.qameta.allure.Description;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+import apps.vpn.pages.LogIn;
+import apps.vpn.pages.MainScreen;
+
+import java.time.Duration;
 
 public class Temp extends BaseTest {
 
@@ -13,6 +18,10 @@ public class Temp extends BaseTest {
             2. some
             3. some""")
     public void validationElements() {
-        
+        MainScreen mainScreen = new MainScreen(customDriver);
+        mainScreen.fluentVisibility(mainScreen.menu.menuButton , Duration.ofSeconds(20)).click();
+        customDriver.getAppiumDriver().findElement(mainScreen.menu.signIn).click();
+        new LogIn(customDriver).logIn("nagaraju.batchu7+iOSYearlyExpired@gmail.com", "Test@123");
+        Assert.fail();
     }
 }

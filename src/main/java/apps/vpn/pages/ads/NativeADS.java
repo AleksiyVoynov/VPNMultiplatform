@@ -1,9 +1,9 @@
-package pages.apps.vpn.ads;
+package apps.vpn.pages.ads;
 
 import driver.CustomDriver;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.By;
-import pages.BasePage;
+import apps.BasePage;
 
 import java.time.Duration;
 import java.util.HashMap;

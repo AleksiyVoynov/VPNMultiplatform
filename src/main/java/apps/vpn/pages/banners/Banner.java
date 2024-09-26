@@ -1,4 +1,4 @@
-package pages.banners;
+package apps.vpn.pages.banners;
 
 import org.openqa.selenium.By;
 
