@@ -1,17 +1,15 @@
 package pages.apps.vpn;
 
 import common.Contexts;
-import configs.Config;
 import configs.devices.Android;
 import configs.devices.IOS;
-import io.appium.java_client.AppiumDriver;
+import driver.CustomDriver;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.BasePage;
 
 public class LogIn extends BasePage {
 
-    private final AppiumDriver appiumDriver;
     private Contexts contexts;
     public final By email = By.cssSelector("#SignInEmailField");
     public final By password = By.cssSelector("#SignInPasswordField");
@@ -19,13 +17,12 @@ public class LogIn extends BasePage {
     public final By closePage = By.id("com.android.chrome:id/close_button");
     public final By forgotPasswordButton = By.cssSelector("[name='UpdatePasswordModalButton']");
 
-    public LogIn(Config config, AppiumDriver appiumDriver) {
-        super(appiumDriver);
-        this.appiumDriver = appiumDriver;
-        if (config.device instanceof Android) {
-            this.contexts = new Contexts(config, appiumDriver, "WEBVIEW_chrome");
-        } else if (config.device instanceof IOS) {
-            this.contexts = new Contexts(config, appiumDriver, "safari");
+    public LogIn(CustomDriver customDriver) {
+        super(customDriver);
+        if (customDriver.getDevice() instanceof Android) {
+            this.contexts = new Contexts(customDriver, "WEBVIEW_chrome");
+        } else if (customDriver.getDevice() instanceof IOS) {
+            this.contexts = new Contexts(customDriver, "safari");
         }
     }
 
@@ -34,7 +31,7 @@ public class LogIn extends BasePage {
         contexts.webViewContext();
         fluentVisibility(this.email).sendKeys(email);
         fluentVisibility(this.password).sendKeys(password);
-        appiumDriver.findElement(this.logInButton).click();
+        customDriver.getAppiumDriver().findElement(this.logInButton).click();
         contexts.nativeContext();
     }
 }

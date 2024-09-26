@@ -2,7 +2,7 @@ package configs.platformConfig.ios;
 
 import configs.AppiumConfig;
 import configs.devices.Device;
-import io.appium.java_client.ios.IOSDriver;
+import driver.CustomAndroidDriver;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,10 +11,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class IOSConfig {
-    public IOSDriver ios;
 
-    public void initDriver(Device device) throws MalformedURLException {
+    public CustomAndroidDriver initDriver(Device device) throws MalformedURLException {
         AppiumConfig appiumConfig = new AppiumConfig();
+        device.capabilities.setCapability("platformName", "ios");
         device.capabilities.setCapability("appium:automationName", "XCUITest");
         device.capabilities.setCapability("appium:bundleId", device.app.bundleId);
         device.capabilities.setCapability("appium:newCommandTimeout", 0);
@@ -29,9 +29,9 @@ public class IOSConfig {
 
         device.capabilities.setCapability("appium:wdaLocalPort", appiumConfig.IOSWDPort);
         device.capabilities.setCapability("appium:derivedDataPath", findWebDriverAgentPath());
-        this.ios = new IOSDriver(
+        return new CustomAndroidDriver(
                 new URL("http://" + appiumConfig.appiumIOSIP + ":" + appiumConfig.appiumIOSPort + "/"),
-                device.capabilities);
+                device);
     }
 
     private String findWebDriverAgentPath() {

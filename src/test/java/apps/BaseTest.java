@@ -1,7 +1,6 @@
 package apps;
 
 import common.Contexts;
-import configs.Config;
 import configs.app.App;
 import configs.app.MultiPlatformVPN;
 import configs.devices.Android;
@@ -9,7 +8,7 @@ import configs.devices.Device;
 import configs.devices.IOS;
 import configs.platformConfig.android.AndroidConfig;
 import configs.platformConfig.ios.IOSConfig;
-import io.appium.java_client.AppiumDriver;
+import driver.CustomDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSStartScreenRecordingOptions;
@@ -34,8 +33,9 @@ public class BaseTest implements IHookable {
             "14",
             "R5CX72VNK6H",
             new MultiPlatformVPN());
-    protected Config config;
-    public AppiumDriver appiumDriver;
+
+    public CustomDriver customDriver;
+
     private final boolean recordingVideo = true;
     private boolean testIsThrowable = true;
 
@@ -57,26 +57,23 @@ public class BaseTest implements IHookable {
         }
 
         if (device instanceof Android) {
-            AndroidConfig androidConfig = new AndroidConfig();
-            androidConfig.initDriver(device);
-            config = new Config(device);
-            appiumDriver = androidConfig.android;
+            customDriver =  new AndroidConfig().initDriver(device);
+            AndroidDriver androidDriver = (AndroidDriver) customDriver.getDriver();
+            androidDriver.activateApp(customDriver.getDevice().app.appPackage);
         } else if (device instanceof IOS) {
-            IOSConfig iosConfig = new IOSConfig();
-            iosConfig.initDriver(device);
-            config = new Config(device);
-            appiumDriver = iosConfig.ios;
+            customDriver = new IOSConfig().initDriver(device);
+            //todo the same as android
         } else {
             Assert.fail("unknown device platform");
         }
-        appiumDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
-        new Contexts(config, appiumDriver).nativeContext();
+        customDriver.getAppiumDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
+        new Contexts(customDriver).nativeContext();
     }
 
     @AfterClass
     @Step("tearing down appium driver")
     protected void tearDown() {
-        appiumDriver.quit();
+        customDriver.getAppiumDriver().quit();
     }
 
     @Override
@@ -99,7 +96,7 @@ public class BaseTest implements IHookable {
     public void beforeMethod() {
         if (recordingVideo) {
             if (device instanceof Android) {
-                AndroidDriver androidDriver = (AndroidDriver) appiumDriver;
+                AndroidDriver androidDriver = (AndroidDriver) customDriver.getDriver();
                 String w = Integer.toString(androidDriver.manage().window().getSize().width / 2);
                 String h = Integer.toString(androidDriver.manage().window().getSize().height / 2);
                 androidDriver.startRecordingScreen(new IOSStartScreenRecordingOptions()
@@ -107,7 +104,7 @@ public class BaseTest implements IHookable {
                 androidDriver.startRecordingScreen();
 
             } else if (device instanceof IOS) {
-                IOSDriver iosDriver = (IOSDriver) appiumDriver;
+                IOSDriver iosDriver = (IOSDriver) customDriver.getDriver();
                 String w = Integer.toString(iosDriver.manage().window().getSize().width / 2);
                 String h = Integer.toString(iosDriver.manage().window().getSize().height / 2);
                 iosDriver.startRecordingScreen(new IOSStartScreenRecordingOptions()
@@ -119,18 +116,18 @@ public class BaseTest implements IHookable {
 
     @AfterMethod
     public void afterMethod() {
-        if (appiumDriver != null) {
-            SessionId sessionId = appiumDriver.getSessionId();
+        if (customDriver != null) {
+            SessionId sessionId = customDriver.getAppiumDriver().getSessionId();
             String sessionIDString = sessionId != null ? sessionId.toString() : null;
             if (sessionIDString != null) {
                 if (recordingVideo) {
                     String base64String = null;
                     if (device instanceof Android) {
-                        AndroidDriver androidDriver = (AndroidDriver) appiumDriver;
+                        AndroidDriver androidDriver = (AndroidDriver) customDriver.getAppiumDriver();
                         base64String = androidDriver.stopRecordingScreen();
 
                     } else if (device instanceof IOS) {
-                        IOSDriver iosDriver = (IOSDriver) appiumDriver;
+                        IOSDriver iosDriver = (IOSDriver) customDriver.getAppiumDriver();
                         base64String = iosDriver.stopRecordingScreen();
                     }
                     if (testIsThrowable) {
@@ -152,7 +149,7 @@ public class BaseTest implements IHookable {
 
     @Attachment(value = "Failure in method {0}", type = "image/png")
     private byte[] takeScreenShot(String ignoredMethodName) {
-        return appiumDriver.getScreenshotAs(OutputType.BYTES);
+        return customDriver.getAppiumDriver().getScreenshotAs(OutputType.BYTES);
     }
 
     private App getApp(String name) {

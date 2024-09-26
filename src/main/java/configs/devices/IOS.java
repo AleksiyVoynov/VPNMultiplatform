@@ -1,7 +1,6 @@
 package configs.devices;
 
 import configs.app.App;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class IOS extends Device {
 

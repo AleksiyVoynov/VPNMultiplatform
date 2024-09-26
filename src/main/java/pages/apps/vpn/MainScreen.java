@@ -1,16 +1,10 @@
 package pages.apps.vpn;
 
-import configs.Config;
+import driver.CustomDriver;
 import io.appium.java_client.AppiumBy;
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileBy;
-import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import pages.BasePage;
-
-import java.util.List;
 
 public class MainScreen extends BasePage {
     public Menu menu;
@@ -26,9 +20,9 @@ public class MainScreen extends BasePage {
 
 
 
-    public MainScreen(AppiumDriver appiumDriver) {
-        super(appiumDriver);
-        menu = new Menu(appiumDriver);
+    public MainScreen(CustomDriver customDriver) {
+        super(customDriver);
+        menu = new Menu(this.customDriver);
     }
 
     @Step("make search {0}")

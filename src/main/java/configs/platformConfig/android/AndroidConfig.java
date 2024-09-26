@@ -3,15 +3,15 @@ package configs.platformConfig.android;
 
 import configs.AppiumConfig;
 import configs.devices.Device;
-import io.appium.java_client.android.AndroidDriver;
+import driver.CustomAndroidDriver;
 
 import java.net.URL;
 
 public class AndroidConfig {
-    public AndroidDriver android;
 
-    public void initDriver(Device device) throws Exception {
+    public CustomAndroidDriver initDriver(Device device) throws Exception {
         AppiumConfig appiumConfig = new AppiumConfig();
+        device.capabilities.setCapability("platformName", "Android");
         device.capabilities.setCapability("appium:noReset", true);
         device.capabilities.setCapability("appium:appPackage", device.app.appPackage);
         device.capabilities.setCapability("appium:appActivity", device.app.appActivity);
@@ -20,9 +20,8 @@ public class AndroidConfig {
         //device.capabilities.setCapability("appium:autoWebviewTimeout", 5000);
         //device.capabilities.setCapability("appium:systemPort", appiumConfig.androidWDPort);
         //device.capabilities.setCapability("appium:chromedriverPort", appiumConfig.androidChromePort);
-        android = new AndroidDriver(
+        return new CustomAndroidDriver(
                 new URL("http://" + appiumConfig.appiumAndroidIP + ":" + appiumConfig.appiumAndroidPort + "/"),
-                device.capabilities);
-        android.activateApp(device.app.appPackage);
+                device);
     }
 }
