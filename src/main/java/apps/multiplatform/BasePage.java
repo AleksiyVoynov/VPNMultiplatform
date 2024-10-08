@@ -48,6 +48,18 @@ public class BasePage {
         return fluentWait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
+    public WebElement fluentVisibility(WebElement element) {
+
+        int duration = 500;
+
+        FluentWait<AppiumDriver> fluentWait = new FluentWait<>(customDriver.getAppiumDriver()).withTimeout(Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofMillis(duration))
+                .ignoring(NoSuchElementException.class)
+                .ignoring(StaleElementReferenceException.class);
+
+        return fluentWait.until(ExpectedConditions.visibilityOf(element));
+    }
+
     public WebElement fluentToBeClickable(By by) {
 
         int duration = 500;

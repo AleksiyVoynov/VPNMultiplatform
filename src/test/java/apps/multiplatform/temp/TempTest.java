@@ -1,25 +1,15 @@
 package apps.multiplatform.temp;
 
 import apps.BaseTest;
-import apps.multiplatform.pages.login.LogIn;
 import apps.multiplatform.pages.mainPage.MainScreen;
-import apps.multiplatform.pages.ads.FullScreenADS;
-import apps.multiplatform.pages.ads.GSMADS;
-import apps.multiplatform.pages.serverList.ServerParser;
-import apps.common.FingerMove;
-import io.appium.java_client.android.AndroidDriver;
+import apps.multiplatform.pages.serverList.UIServerParser;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
 import java.util.*;
 
 public class TempTest extends BaseTest {
@@ -46,16 +36,16 @@ public class TempTest extends BaseTest {
             Test Description:
             This test checks the availability of servers for the IKEv2 protocol.
             The check is performed on each server in the list for free user""")
-    public void Temp1(String server) throws InterruptedException {
+    public void Temp1(String server) {
         new MainScreen(customDriver)
                 .tapIKEv2()
                 .tapFastestLocation()
                 .tapFree();
 
-        ServerParser serverParser = new ServerParser(customDriver.getAppiumDriver());
-        serverParser.parseServersWithoutSwipes();
+        UIServerParser UIServerParser = new UIServerParser(customDriver);
+        UIServerParser.parseServersWithoutSwipes();
 
-        Map<String, List<String>> servers = serverParser.servers;
+        Map<String, List<String>> servers = UIServerParser.servers;
         for (Map.Entry<String, List<String>> entry : servers.entrySet()) {
             // Выводим ключ
             System.out.println(entry.getKey());
@@ -68,7 +58,7 @@ public class TempTest extends BaseTest {
     }
 
 
-    public void validationElements() {
+/*    public void validationElements() {
         MainScreen mainScreen = new MainScreen(customDriver);
         try {
             customDriver.getAppiumDriver().findElement(mainScreen.menu.menuButton);
@@ -145,5 +135,5 @@ public class TempTest extends BaseTest {
         }
 
         return serverNames;
-    }
+    }*/
 }

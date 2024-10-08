@@ -2,10 +2,7 @@ package apps.multiplatform;
 
 import apps.BaseTest;
 import apps.multiplatform.pages.mainPage.MainScreen;
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -37,6 +34,7 @@ public class ConnectivityTest extends BaseTest {
 
     @Test(priority = 1, description = "check connection IKEv2", dataProvider = "serverData")
     @Severity(SeverityLevel.CRITICAL)
+    @Story("IKEv2 FREE")
     @Description("""
             Test Description:
             This test checks the availability of servers for the IKEv2 protocol.

@@ -2,6 +2,8 @@ package apps.multiplatform.pages.serverList;
 
 
 import apps.common.FingerMove;
+import apps.multiplatform.BasePage;
+import driver.CustomDriver;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
@@ -9,19 +11,20 @@ import org.openqa.selenium.WebElement;
 
 import java.util.*;
 
-public class ServerParser {
+public class UIServerParser extends BasePage {
 
     private final AppiumDriver appiumDriver;
 
     private final By listID = By.id("com.free.vpn.super.hotspot.open:id/lv_server_list");
     private final By serverGroups = AppiumBy.androidUIAutomator("new UiSelector().className(\"android.widget.LinearLayout\")");
-    private final By serverName = By.id("com.free.vpn.super.hotspot.open:id/item_country_name");
-    private final By button = By.id("com.free.vpn.super.hotspot.open:id/item_radio_button");
+    private final By serverName = AppiumBy.androidUIAutomator("new UiSelector().resourceId(\"com.free.vpn.super.hotspot.open:id/item_country_name\")");
+    private final By button = AppiumBy.androidUIAutomator("new UiSelector().resourceId(\"com.free.vpn.super.hotspot.open:id/item_radio_button\")");
 
     public Map<String, List<String>> servers = new HashMap<>();
 
-    public ServerParser(AppiumDriver appiumDriver) {
-        this.appiumDriver = appiumDriver;
+    public UIServerParser(CustomDriver customDriver) {
+        super(customDriver);
+        this.appiumDriver = customDriver.getAppiumDriver();
     }
 
     public void parseServersWithoutSwipes() {
@@ -33,7 +36,7 @@ public class ServerParser {
         List<WebElement> serverGroups = listID.findElements(this.serverGroups);
 
         //get group
-        WebElement currentGroup = serverGroups.get(5);
+        WebElement currentGroup = serverGroups.get(0);
         String serverName = currentGroup.findElement(this.serverName).getText();
 
         new FingerMove(appiumDriver).doSwipe(0.5, 0.8, 0.5, 0.66);
