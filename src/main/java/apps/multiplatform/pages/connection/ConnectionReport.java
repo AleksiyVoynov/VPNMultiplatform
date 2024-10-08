@@ -22,9 +22,16 @@ public class ConnectionReport extends Connection{
 
     @Step("validate connection report page")
     public ConnectionReport validateConnectionReportPage() {
-        Assert.assertEquals(fluentVisibility(titleConnectionReport).getText(), "Connection Report", "title page was incorrect");
-        Assert.assertEquals(fluentVisibility(youAreConnectedText).getText(), "You are disconnected", "title page was incorrect");
+        Assert.assertEquals(fluentVisibility(titleConnectionReport).getText(),
+                "Connection Report",
+                "title page was incorrect");
+
+        Assert.assertEquals(fluentVisibility(youAreConnectedText).getText(),
+                "You are disconnected",
+                "title page was incorrect");
+
         Assert.assertTrue(customDriver.getAppiumDriver().findElement(timer).isDisplayed());
+
         return new ConnectionReport(customDriver);
     }
 }

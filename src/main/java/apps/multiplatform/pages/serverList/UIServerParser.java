@@ -13,6 +13,8 @@ import java.util.*;
 
 public class UIServerParser extends BasePage {
 
+    List<Server> servers = new ArrayList<>();
+
     private final AppiumDriver appiumDriver;
 
     private final By listID = By.id("com.free.vpn.super.hotspot.open:id/lv_server_list");
@@ -20,14 +22,12 @@ public class UIServerParser extends BasePage {
     private final By serverName = AppiumBy.androidUIAutomator("new UiSelector().resourceId(\"com.free.vpn.super.hotspot.open:id/item_country_name\")");
     private final By button = AppiumBy.androidUIAutomator("new UiSelector().resourceId(\"com.free.vpn.super.hotspot.open:id/item_radio_button\")");
 
-    public Map<String, List<String>> servers = new HashMap<>();
-
     public UIServerParser(CustomDriver customDriver) {
         super(customDriver);
         this.appiumDriver = customDriver.getAppiumDriver();
     }
 
-    public void parseServersWithoutSwipes() {
+    void parseServersWithoutSwipes() {
         String currentName = "";
         int index = 0;
 
@@ -36,7 +36,7 @@ public class UIServerParser extends BasePage {
         List<WebElement> serverGroups = listID.findElements(this.serverGroups);
 
         //get group
-        WebElement currentGroup = serverGroups.get(0);
+        WebElement currentGroup = serverGroups.get(6);
         String serverName = currentGroup.findElement(this.serverName).getText();
 
         new FingerMove(appiumDriver).doSwipe(0.5, 0.8, 0.5, 0.66);
@@ -52,9 +52,6 @@ public class UIServerParser extends BasePage {
                 currentGroup = serverGroups.get(index);
                 serverName = currentGroup.findElement(this.serverName).getText();
             }
-
-            //add group to map
-            servers.put(serverName, new ArrayList<>());
 
             //open list
             currentGroup.findElement(this.button).click();
@@ -75,60 +72,57 @@ public class UIServerParser extends BasePage {
     }
 
     private void parsServers(String serverName) {
-        WebElement listID = appiumDriver.findElement(this.listID);
-        List<WebElement> names = listID.findElements(this.serverName);
+        var names = appiumDriver
+                .findElement(this.listID)
+                .findElements(this.serverName);
 
-        for (WebElement element : names) {
-            String text = element.getText();
-            if (!text.contains("(") && !text.contains(")")) {
-                servers.get(serverName).add(text);
+        for (var element : names) {
+            var text = element.getText();
+            if (!(text.contains("(") || text.contains(")"))) {
+                servers.add(new Server(serverName, text));
             }
         }
     }
 
+
     private boolean checkHasMoreGroups(String currentCluster) {
-        WebElement listID = appiumDriver.findElement(this.listID);
-        List<WebElement> serverGroups = listID.findElements(this.serverGroups);
+        List<WebElement> serverGroups = appiumDriver
+                .findElement(this.listID)
+                .findElements(this.serverGroups);
+
         return !serverGroups.get(serverGroups.size() - 1).getText().equals(currentCluster);
     }
 
     private int getNextIndex(String serverName) {
-        List<WebElement> serverGroups = appiumDriver.findElement(this.listID).findElements(this.serverGroups);
+        var serverGroups = appiumDriver
+                .findElement(this.listID)
+                .findElements(this.serverGroups);
 
-        int size = serverGroups.size();
-
-        for (int i = 0; i < size; i++) {
-            String name = serverGroups.get(i).findElement(this.serverName).getText();
+        for (int i = 0; i < serverGroups.size(); i++) {
+            var name = serverGroups.get(i).findElement(this.serverName).getText();
             if (name.equals(serverName)) {
-                if (i < size - 1) {
-                    return i + 1;
-                } else {
-                    return -1;
-                }
+                return (i < serverGroups.size() - 1) ? i + 1 : -1;
             }
         }
         return -1;
     }
 
+
     private void closeList(String serverName) {
-        WebElement listID = appiumDriver.findElement(this.listID);
-        List<WebElement> groups = listID.findElements(this.serverGroups);
+        var groups = appiumDriver
+                .findElement(this.listID)
+                .findElements(this.serverGroups);
 
-        for (int i = 0; i < groups.size(); i++) {
+        for (var group : groups) {
             String text;
-
-            if (i == 0) {
-                try {
-                    text = groups.get(i).findElement(this.serverName).getText();
-                } catch (org.openqa.selenium.NoSuchElementException e) {
-                    text = "";
-                }
-            } else {
-                text = groups.get(i).findElement(this.serverName).getText();
+            try {
+                text = group.findElement(this.serverName).getText();
+            } catch (org.openqa.selenium.NoSuchElementException e) {
+                text = "";
             }
 
             if (text.equals(serverName)) {
-                groups.get(i).findElement(this.button).click();
+                group.findElement(this.button).click();
                 break;
             }
         }

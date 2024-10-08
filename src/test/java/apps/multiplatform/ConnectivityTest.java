@@ -2,6 +2,7 @@ package apps.multiplatform;
 
 import apps.BaseTest;
 import apps.multiplatform.pages.mainPage.MainScreen;
+import apps.multiplatform.pages.serverList.Server;
 import io.qameta.allure.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -13,21 +14,20 @@ import java.util.List;
 @Epic("Connectivity tests")
 public class ConnectivityTest extends BaseTest {
 
-    private List<String> serverList;
+    private List<Server> servers;
 
     @BeforeClass
     public void generateServers() {
-        serverList = new ArrayList<>();
-        serverList.add("German 32");
-        serverList.add("USA 7");
-        serverList.add("Ukraine 3");
+        servers = new ArrayList<>();
+        servers.add(new Server("ikev2-42 (1)", "ikev2-42"));
+        servers.add(new Server("ikev2-43 (1)", "ikev2-43"));
     }
 
     @DataProvider(name = "serverData")
     public Object[][] serverData() {
-        Object[][] data = new Object[serverList.size()][1];
-        for (int i = 0; i < serverList.size(); i++) {
-            data[i][0] = serverList.get(i);
+        Object[][] data = new Object[servers.size()][1];
+        for (int i = 0; i < servers.size(); i++) {
+            data[i][0] = servers.get(i);
         }
         return data;
     }
@@ -39,12 +39,13 @@ public class ConnectivityTest extends BaseTest {
             Test Description:
             This test checks the availability of servers for the IKEv2 protocol.
             The check is performed on each server in the list for free user""")
-    public void Connectivity(String server) {
+    public void Connectivity(Server server) {
         new MainScreen(customDriver)
                 .tapIKEv2()
                 .tapFastestLocation()
                 .tapFree()
-                .tapFastestLocation()
+                .openCluster(server.cluster)
+                .tapServer(server.name)
                 .validateConnectionDetailPage()
                 .tapBack();
                 //.tapPowerButton();

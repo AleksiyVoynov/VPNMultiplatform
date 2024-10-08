@@ -1,11 +1,18 @@
 package apps.multiplatform.pages.serverList;
 
+import apps.common.FingerMove;
 import apps.multiplatform.BasePage;
 import apps.multiplatform.pages.connection.ConnectionDetail;
 import driver.CustomDriver;
 import io.appium.java_client.AppiumBy;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class ServerList extends BasePage {
 
@@ -39,8 +46,22 @@ public class ServerList extends BasePage {
         return new ConnectionDetail(customDriver);
     }
 
-    public ConnectionDetail some() {
-        fluentVisibility(fastenLocationButton).click();
+    @Step("tap on server")
+    public ConnectionDetail tapServer(String serverName) {
+        //todo to be continue
         return new ConnectionDetail(customDriver);
+    }
+
+    @Step("open cluster")
+    public ServerList openCluster(String cluster) {
+        //todo to be continue
+        return this;
+    }
+
+    @Step("parsing servers")
+    public List<Server> serversParsing() {
+        UIServerParser UIServerParser = new UIServerParser(customDriver);
+        UIServerParser.parseServersWithoutSwipes();
+        return UIServerParser.servers;
     }
 }

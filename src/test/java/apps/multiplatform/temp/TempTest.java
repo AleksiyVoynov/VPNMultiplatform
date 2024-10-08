@@ -2,6 +2,7 @@ package apps.multiplatform.temp;
 
 import apps.BaseTest;
 import apps.multiplatform.pages.mainPage.MainScreen;
+import apps.multiplatform.pages.serverList.Server;
 import apps.multiplatform.pages.serverList.UIServerParser;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -37,24 +38,14 @@ public class TempTest extends BaseTest {
             This test checks the availability of servers for the IKEv2 protocol.
             The check is performed on each server in the list for free user""")
     public void Temp1(String server) {
-        new MainScreen(customDriver)
+        List<Server> servers = new MainScreen(customDriver)
                 .tapIKEv2()
                 .tapFastestLocation()
-                .tapFree();
+                .tapFree()
+                .serversParsing();
 
-        UIServerParser UIServerParser = new UIServerParser(customDriver);
-        UIServerParser.parseServersWithoutSwipes();
-
-        Map<String, List<String>> servers = UIServerParser.servers;
-        for (Map.Entry<String, List<String>> entry : servers.entrySet()) {
-            // Выводим ключ
-            System.out.println(entry.getKey());
-
-            // Выводим значения с отступом
-            for (String value : entry.getValue()) {
-                System.out.println("    " + value);
-            }
-        }
+        System.out.println("Quantity of servers: " + servers.size());
+        servers.forEach(System.out::println);
     }
 
 

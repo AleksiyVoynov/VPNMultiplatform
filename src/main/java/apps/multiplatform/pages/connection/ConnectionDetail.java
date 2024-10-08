@@ -22,12 +22,17 @@ public class ConnectionDetail extends Connection {
 
     @Step("validate connection detail page")
     public ConnectionDetail validateConnectionDetailPage() {
+
         Assert.assertEquals(fluentVisibility(titleConnectionDetail).getText(),
                 "Connection Details", "title page was incorrect");
+
         Assert.assertEquals(fluentVisibility(youAreConnectedText).getText(),
                 "You are connected", "title page was incorrect");
+
         Assert.assertTrue(customDriver.getAppiumDriver().findElement(timer).isDisplayed());
+
         attachScreenToReport("connection details", By.id("com.free.vpn.super.hotspot.open:id/layout_ip_info"));
+
         return new ConnectionDetail(customDriver);
     }
 }

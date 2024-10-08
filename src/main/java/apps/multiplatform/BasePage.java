@@ -28,7 +28,8 @@ public class BasePage {
 
         int duration = 500;
 
-        FluentWait<AppiumDriver> fluentWait = new FluentWait<>(customDriver.getAppiumDriver()).withTimeout(timeout)
+        FluentWait<AppiumDriver> fluentWait = new FluentWait<>(customDriver.getAppiumDriver())
+                .withTimeout(timeout)
                 .pollingEvery(Duration.ofMillis(duration))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class);
@@ -40,7 +41,8 @@ public class BasePage {
 
         int duration = 500;
 
-        FluentWait<AppiumDriver> fluentWait = new FluentWait<>(customDriver.getAppiumDriver()).withTimeout(Duration.ofSeconds(10))
+        FluentWait<AppiumDriver> fluentWait = new FluentWait<>(customDriver.getAppiumDriver())
+                .withTimeout(Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(duration))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class);
@@ -52,7 +54,8 @@ public class BasePage {
 
         int duration = 500;
 
-        FluentWait<AppiumDriver> fluentWait = new FluentWait<>(customDriver.getAppiumDriver()).withTimeout(Duration.ofSeconds(10))
+        FluentWait<AppiumDriver> fluentWait = new FluentWait<>(customDriver.getAppiumDriver())
+                .withTimeout(Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(duration))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class);
@@ -64,7 +67,8 @@ public class BasePage {
 
         int duration = 500;
 
-        FluentWait<AppiumDriver> fluentWait = new FluentWait<>(customDriver.getAppiumDriver()).withTimeout(Duration.ofSeconds(10))
+        FluentWait<AppiumDriver> fluentWait = new FluentWait<>(customDriver.getAppiumDriver())
+                .withTimeout(Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(duration))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class);
