@@ -22,7 +22,8 @@ public class CustomAndroidDriver extends AndroidDriver implements CustomDriver {
 
     @Override
     public AndroidDriver getDriver() {
-        return this;
+        AndroidDriver a = (AndroidDriver) this;
+        return a;
     }
 
     @Override

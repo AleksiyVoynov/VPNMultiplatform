@@ -1,4 +1,4 @@
-package common;
+package apps.common;
 
 import com.google.common.collect.ImmutableMap;
 import configs.devices.Android;

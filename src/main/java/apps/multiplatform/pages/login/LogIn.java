@@ -1,12 +1,12 @@
-package apps.vpn.pages;
+package apps.multiplatform.pages.login;
 
-import common.Contexts;
+import apps.multiplatform.BasePage;
+import apps.common.Contexts;
 import configs.devices.Android;
 import configs.devices.IOS;
 import driver.CustomDriver;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import apps.BasePage;
 
 public class LogIn extends BasePage {
 

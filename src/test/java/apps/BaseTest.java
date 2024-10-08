@@ -1,6 +1,6 @@
 package apps;
 
-import common.Contexts;
+import apps.common.Contexts;
 import configs.app.App;
 import configs.app.MultiPlatformVPN;
 import configs.devices.Android;
@@ -57,7 +57,7 @@ public class BaseTest implements IHookable {
         }
 
         if (device instanceof Android) {
-            customDriver =  new AndroidConfig().initDriver(device);
+            customDriver = new AndroidConfig().initDriver(device);
             AndroidDriver androidDriver = (AndroidDriver) customDriver.getDriver();
             androidDriver.activateApp(customDriver.getDevice().app.appPackage);
         } else if (device instanceof IOS) {
@@ -100,7 +100,8 @@ public class BaseTest implements IHookable {
                 String w = Integer.toString(androidDriver.manage().window().getSize().width / 2);
                 String h = Integer.toString(androidDriver.manage().window().getSize().height / 2);
                 androidDriver.startRecordingScreen(new IOSStartScreenRecordingOptions()
-                        .withVideoFilters("scale=" + w + ":" + h));
+                        .withVideoFilters("scale=" + w + ":" + h)
+                        .withTimeLimit(Duration.ofMinutes(30)));
                 androidDriver.startRecordingScreen();
 
             } else if (device instanceof IOS) {
@@ -108,7 +109,8 @@ public class BaseTest implements IHookable {
                 String w = Integer.toString(iosDriver.manage().window().getSize().width / 2);
                 String h = Integer.toString(iosDriver.manage().window().getSize().height / 2);
                 iosDriver.startRecordingScreen(new IOSStartScreenRecordingOptions()
-                        .withVideoFilters("scale=" + w + ":" + h));
+                        .withVideoFilters("scale=" + w + ":" + h)
+                        .withTimeLimit(Duration.ofMinutes(30)));
                 iosDriver.startRecordingScreen();
             }
         }
@@ -130,9 +132,10 @@ public class BaseTest implements IHookable {
                         IOSDriver iosDriver = (IOSDriver) customDriver.getAppiumDriver();
                         base64String = iosDriver.stopRecordingScreen();
                     }
-                    if (testIsThrowable) {
+                    /*if (testIsThrowable) {
                         attachVideo(base64String);
-                    }
+                    }*/
+                    attachVideo(base64String);
                 }
             } else {
                 Allure.addAttachment("the result was: ", "session ID was null so video wasn't record");

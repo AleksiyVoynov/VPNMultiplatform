@@ -1,10 +1,12 @@
-package apps.vpn.pages;
+package apps.multiplatform.pages.mainPage;
 
+import apps.multiplatform.BasePage;
+import apps.multiplatform.pages.menu.Menu;
+import apps.multiplatform.pages.serverList.ServerList;
 import driver.CustomDriver;
 import io.appium.java_client.AppiumBy;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import apps.BasePage;
 
 public class MainScreen extends BasePage {
     public Menu menu;
@@ -14,10 +16,10 @@ public class MainScreen extends BasePage {
     public final By helpButton = By.id("com.free.vpn.super.hotspot.open:id/btnHelp");
     public final By serverListLink = By.id("com.free.vpn.super.hotspot.open:id/tv_fastest_server");
     public final By connectButton = By.id("com.free.vpn.super.hotspot.open:id/iv_connect");
+    public final By connectStatus = By.id("com.free.vpn.super.hotspot.open:id/tvConnectStatus");
     public final By modesButtons = AppiumBy.androidUIAutomator("new UiSelector().text(\"Auto\")");
     public final By protocolAuto = AppiumBy.androidUIAutomator("new UiSelector().text(\"IKEv2\")");
     public final By protocolIKEv2 = AppiumBy.androidUIAutomator("new UiSelector().text(\"IKEv2\")");
-
 
 
     public MainScreen(CustomDriver customDriver) {
@@ -25,7 +27,35 @@ public class MainScreen extends BasePage {
         menu = new Menu(this.customDriver);
     }
 
-    @Step("make search {0}")
-    public void searchFor() {
+    @Step("tap on IKEv2 protocol")
+    public MainScreen tapIKEv2() {
+        fluentVisibility(protocolIKEv2).click();
+        return this;
+    }
+
+    @Step("tap fastest location")
+    public ServerList tapFastestLocation() {
+        fluentToBeClickable(serverListLink).click();
+        return new ServerList(customDriver);
+    }
+
+    @Step("tap power button")
+    public void tapPowerButton() {
+        if (fluentVisibility(connectStatus).getText().equals("CONNECTED")) {
+            tapDisconnectButton();
+        } else {
+            tapConnectButton();
+        }
+    }
+
+    @Step("tap connect button")
+    private void tapConnectButton() {
+        fluentVisibility(connectButton).click();
+    }
+
+    @Step("tap disconnect button")
+    private void tapDisconnectButton() {
+        fluentVisibility(connectButton).click();
+        fluentVisibility(new Dialog().disconnectButton).click();
     }
 }
