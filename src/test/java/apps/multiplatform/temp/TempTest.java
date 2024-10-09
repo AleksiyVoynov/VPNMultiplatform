@@ -3,7 +3,6 @@ package apps.multiplatform.temp;
 import apps.BaseTest;
 import apps.multiplatform.pages.mainPage.MainScreen;
 import apps.multiplatform.pages.serverList.Server;
-import apps.multiplatform.pages.serverList.UIServerParser;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -44,7 +43,7 @@ public class TempTest extends BaseTest {
                 .tapFree()
                 .serversParsing();
 
-        System.out.println("Quantity of servers: " + servers.size());
+        System.out.println("Servers Quantity: " + servers.size());
         servers.forEach(System.out::println);
     }
 

@@ -10,6 +10,7 @@ import configs.platformConfig.AndroidConfig;
 import configs.platformConfig.IOSConfig;
 import driver.CustomDriver;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidStartScreenRecordingOptions;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSStartScreenRecordingOptions;
 import io.qameta.allure.Allure;
@@ -97,11 +98,8 @@ public class BaseTest implements IHookable {
         if (recordingVideo) {
             if (device instanceof Android) {
                 AndroidDriver androidDriver = (AndroidDriver) customDriver.getDriver();
-                String w = Integer.toString(androidDriver.manage().window().getSize().width / 2);
-                String h = Integer.toString(androidDriver.manage().window().getSize().height / 2);
-                androidDriver.startRecordingScreen(new IOSStartScreenRecordingOptions()
-                        .withVideoFilters("scale=" + w + ":" + h)
-                        .withTimeLimit(Duration.ofMinutes(30)));
+                androidDriver.startRecordingScreen(new AndroidStartScreenRecordingOptions()
+                        .withTimeLimit(Duration.ofMinutes(25)));
                 androidDriver.startRecordingScreen();
 
             } else if (device instanceof IOS) {
@@ -109,8 +107,7 @@ public class BaseTest implements IHookable {
                 String w = Integer.toString(iosDriver.manage().window().getSize().width / 2);
                 String h = Integer.toString(iosDriver.manage().window().getSize().height / 2);
                 iosDriver.startRecordingScreen(new IOSStartScreenRecordingOptions()
-                        .withVideoFilters("scale=" + w + ":" + h)
-                        .withTimeLimit(Duration.ofMinutes(30)));
+                        .withVideoFilters("scale=" + w + ":" + h));
                 iosDriver.startRecordingScreen();
             }
         }

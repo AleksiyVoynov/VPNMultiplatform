@@ -8,7 +8,8 @@ import org.testng.Assert;
 
 public class ConnectionReport extends Connection{
 
-    public final By titleConnectionReport = AppiumBy.androidUIAutomator("new UiSelector().text(\"Connection Report\")");
+    public final By titleConnectionReport =
+            AppiumBy.androidUIAutomator("new UiSelector().text(\"Connection Report\")");
 
     //share block
     public final By titleSupport = AppiumBy.androidUIAutomator("new UiSelector().text(\"Support us with a\n" +

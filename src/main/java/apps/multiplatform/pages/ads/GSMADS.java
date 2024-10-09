@@ -13,7 +13,8 @@ public class GSMADS extends BasePage {
 
     public final By adsContainer = By.id("app-interstitial-slot");
     public final By close = By.id("dismiss-button");
-    public final By skip = AppiumBy.androidUIAutomator("new UiSelector().className(\"android.widget.Button\").index(0)");
+    public final By skip =
+            AppiumBy.androidUIAutomator("new UiSelector().className(\"android.widget.Button\").index(0)");
 
     public GSMADS(CustomDriver customDriver) {
         super(customDriver);

@@ -19,8 +19,9 @@ public class ConnectivityTest extends BaseTest {
     @BeforeClass
     public void generateServers() {
         servers = new ArrayList<>();
-        servers.add(new Server("ikev2-42 (1)", "ikev2-42"));
-        servers.add(new Server("ikev2-43 (1)", "ikev2-43"));
+        servers.add(new Server("Sweden3 ( 5 )", "Sweden11"));
+        servers.add(new Server("Sweden3 ( 5 )", "Sweden13"));
+        servers.add(new Server("Sweden3 ( 5 )", "Sweden15"));
     }
 
     @DataProvider(name = "serverData")

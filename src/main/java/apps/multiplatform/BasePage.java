@@ -19,16 +19,18 @@ import java.time.Duration;
 
 public class BasePage {
     public final CustomDriver customDriver;
+    public final AppiumDriver appiumDriver;
 
     public BasePage(CustomDriver customDriver) {
         this.customDriver = customDriver;
+        this.appiumDriver = customDriver.getAppiumDriver();
     }
 
     public WebElement fluentVisibility(By by, Duration timeout) {
 
         int duration = 500;
 
-        FluentWait<AppiumDriver> fluentWait = new FluentWait<>(customDriver.getAppiumDriver())
+        FluentWait<AppiumDriver> fluentWait = new FluentWait<>(appiumDriver)
                 .withTimeout(timeout)
                 .pollingEvery(Duration.ofMillis(duration))
                 .ignoring(NoSuchElementException.class)
@@ -41,7 +43,7 @@ public class BasePage {
 
         int duration = 500;
 
-        FluentWait<AppiumDriver> fluentWait = new FluentWait<>(customDriver.getAppiumDriver())
+        FluentWait<AppiumDriver> fluentWait = new FluentWait<>(appiumDriver)
                 .withTimeout(Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(duration))
                 .ignoring(NoSuchElementException.class)
@@ -54,7 +56,7 @@ public class BasePage {
 
         int duration = 500;
 
-        FluentWait<AppiumDriver> fluentWait = new FluentWait<>(customDriver.getAppiumDriver())
+        FluentWait<AppiumDriver> fluentWait = new FluentWait<>(appiumDriver)
                 .withTimeout(Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(duration))
                 .ignoring(NoSuchElementException.class)
@@ -67,7 +69,7 @@ public class BasePage {
 
         int duration = 500;
 
-        FluentWait<AppiumDriver> fluentWait = new FluentWait<>(customDriver.getAppiumDriver())
+        FluentWait<AppiumDriver> fluentWait = new FluentWait<>(appiumDriver)
                 .withTimeout(Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(duration))
                 .ignoring(NoSuchElementException.class)
@@ -78,10 +80,10 @@ public class BasePage {
 
     private File getNativeScreenshot(By by) {
         if (customDriver.getDevice() instanceof IOS) {
-            IOSDriver iosDriver = (IOSDriver) customDriver.getAppiumDriver();
+            IOSDriver iosDriver = (IOSDriver) appiumDriver;
             return iosDriver.findElement(by).getScreenshotAs(OutputType.FILE);
         } else {
-            AndroidDriver androidDriver = (AndroidDriver) customDriver.getAppiumDriver();
+            AndroidDriver androidDriver = (AndroidDriver) appiumDriver;
             return androidDriver.findElement(by).getScreenshotAs(OutputType.FILE);
         }
     }

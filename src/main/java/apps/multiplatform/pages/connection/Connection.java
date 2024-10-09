@@ -9,7 +9,8 @@ import org.openqa.selenium.By;
 
 public abstract class Connection extends BasePage {
 
-    public final By backButton = AppiumBy.androidUIAutomator("new UiSelector().className(\"android.widget.ImageButton\")");
+    public final By backButton =
+            AppiumBy.androidUIAutomator("new UiSelector().className(\"android.widget.ImageButton\")");
 
     public final By youAreConnectedText = By.id("com.free.vpn.super.hotspot.open:id/tv_connect_status");
     public final By timer = By.id("com.free.vpn.super.hotspot.open:id/tv_timer");
