@@ -129,10 +129,9 @@ public class BaseTest implements IHookable {
                         IOSDriver iosDriver = (IOSDriver) customDriver.getAppiumDriver();
                         base64String = iosDriver.stopRecordingScreen();
                     }
-                    /*if (testIsThrowable) {
+                    if (testIsThrowable) {
                         attachVideo(base64String);
-                    }*/
-                    attachVideo(base64String);
+                    }
                 }
             } else {
                 Allure.addAttachment("the result was: ", "session ID was null so video wasn't record");

@@ -20,8 +20,11 @@ public class ConnectivityTest extends BaseTest {
     public void generateServers() {
         servers = new ArrayList<>();
         servers.add(new Server("Sweden3 ( 5 )", "Sweden11"));
-        servers.add(new Server("Sweden3 ( 5 )", "Sweden13"));
-        servers.add(new Server("Sweden3 ( 5 )", "Sweden15"));
+        servers.add(new Server("Germany36 ( 5 )", "Germany104"));
+        servers.add(new Server("France1078 ( 5 )", "France389"));
+        servers.add(new Server("LosAngeles5 ( 2 )", "LosAngeles15"));
+
+        Allure.addAttachment("number of servers", String.valueOf(servers.size()));
     }
 
     @DataProvider(name = "serverData")
@@ -40,14 +43,14 @@ public class ConnectivityTest extends BaseTest {
             Test Description:
             This test checks the availability of servers for the IKEv2 protocol.
             The check is performed on each server in the list for free user""")
-    public void Connectivity(Server server) {
+    public void Connectivity(Server server) throws InterruptedException {
         new MainScreen(customDriver)
                 .tapIKEv2()
                 .tapFastestLocation()
                 .tapFree()
                 .openCluster(server.cluster)
                 .tapServer(server.name)
-                .validateConnectionDetailPage()
+                .validateConnectionDetailPage(server.name)
                 .tapBack();
                 //.tapPowerButton();
 

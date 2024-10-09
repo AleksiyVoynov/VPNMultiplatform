@@ -1,6 +1,7 @@
 package apps.multiplatform.temp;
 
 import apps.BaseTest;
+import apps.common.FingerMove;
 import apps.multiplatform.pages.mainPage.MainScreen;
 import apps.multiplatform.pages.serverList.Server;
 import io.qameta.allure.Description;
@@ -45,6 +46,21 @@ public class TempTest extends BaseTest {
 
         System.out.println("Servers Quantity: " + servers.size());
         servers.forEach(System.out::println);
+    }
+
+    @Test(priority = 1, description = "check connection IKEv2", dataProvider = "serverData")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("""
+            Test Description:
+            This test checks the availability of servers for the IKEv2 protocol.
+            The check is performed on each server in the list for free user""")
+    public void Temp2(String server) {
+        new MainScreen(customDriver)
+                .tapIKEv2()
+                .tapFastestLocation()
+                .tapFree();
+        new FingerMove(customDriver.getAppiumDriver()).doSwipe(0.5, 0.8, 0.5, 0.75);//
+
     }
 
 

@@ -5,16 +5,13 @@ import apps.multiplatform.BasePage;
 import apps.multiplatform.pages.connection.ConnectionDetail;
 import driver.CustomDriver;
 import io.appium.java_client.AppiumBy;
-import io.appium.java_client.AppiumDriver;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ServerList extends BasePage {
 
@@ -41,7 +38,7 @@ public class ServerList extends BasePage {
             AppiumBy.androidUIAutomator("new UiSelector().text(\"Quality Server\")");
 
     private final By listID =
-            By.id("com.free.vpn.super.hotspot.open:id/lv_server_list");
+            AppiumBy.androidUIAutomator("new UiSelector().resourceId(\"com.free.vpn.super.hotspot.open:id/lv_server_list\")");
     private final By serverGroups =
             AppiumBy.androidUIAutomator("new UiSelector().className(\"android.widget.LinearLayout\")");
     private final By serverName =
@@ -74,7 +71,7 @@ public class ServerList extends BasePage {
         for (var element : names) {
             var text = element.getText();
             if (!(text.contains("(") || text.contains(")"))) {
-                if(text.equals(serverName)){
+                if (text.equals(serverName)) {
                     element.click();
                     return new ConnectionDetail(customDriver);
                 }
@@ -85,7 +82,7 @@ public class ServerList extends BasePage {
     }
 
     @Step("open cluster")
-    public ServerList openCluster(String cluster) {
+    public ServerList openCluster(String cluster) throws InterruptedException {
         findCluster(cluster).findElement(button).click();
         return this;
     }
@@ -198,10 +195,8 @@ public class ServerList extends BasePage {
     }
 
 
-    private WebElement findCluster(String cluster) {
+    private WebElement findCluster(String cluster) throws InterruptedException {
         new FingerMove(appiumDriver).doSwipe(0.5, 0.8, 0.5, 0.66);
-        String currentName = "";
-        int index = 0;
 
         //find groups
         WebElement listID = appiumDriver.findElement(this.listID);
@@ -212,31 +207,22 @@ public class ServerList extends BasePage {
         String serverName = currentGroup.findElement(this.serverName).getText();
 
         while (checkHasMoreGroups(serverName)) {
-
-            if (!currentName.isEmpty()) {
-                //find groups
-                serverGroups = appiumDriver.findElement(this.listID).findElements(this.serverGroups);
-
-                //get group
-                currentGroup = serverGroups.get(index);
-                serverName = currentGroup.findElement(this.serverName).getText();
-            }
+            //find groups
+            serverGroups = appiumDriver.findElement(this.listID).findElements(this.serverGroups);
 
             for (WebElement serverGroup : serverGroups) {
-                String s = serverGroup.findElement(this.serverName).getText();
+                String s;
+                try {
+                    s = serverGroup.findElement(this.serverName).getText();
+                } catch (org.openqa.selenium.NoSuchElementException e) {
+                    new FingerMove(customDriver.getAppiumDriver()).doSwipe(0.5, 0.8, 0.5, 0.75);
+                    continue;
+                }
                 if (s.equals(cluster)) {
                     return serverGroup;
                 }
             }
-
-            currentName = serverName;
-            index = getNextIndex(serverName);
-            if (index == -1) {
-                break;
-            }
-            new FingerMove(appiumDriver).doSwipe(0.5, 0.8, 0.5, 0.4);//
-            //new FingerMove(appiumDriver).doSwipe(0.5, 0.6, 0.5, 0.4);///
-
+            new FingerMove(customDriver.getAppiumDriver()).doSwipe(0.5, 0.8, 0.5, 0.4);
         }
         Assert.fail("can't find cluster with name " + cluster);
         return null;
