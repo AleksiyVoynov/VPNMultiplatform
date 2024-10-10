@@ -1,5 +1,6 @@
 package apps.multiplatform.pages.connection;
 
+import apps.multiplatform.pages.serverList.Server;
 import driver.CustomDriver;
 import io.appium.java_client.AppiumBy;
 import io.qameta.allure.Allure;
@@ -22,7 +23,7 @@ public class ConnectionDetail extends Connection {
     }
 
     @Step("validate connection detail page")
-    public ConnectionDetail validateConnectionDetailPage(String serveName) {
+    public ConnectionDetail validateConnectionDetailPage(Server server) {
 
         // title block
         Assert.assertEquals(fluentVisibility(titleConnectionDetail).getText(),
@@ -36,7 +37,7 @@ public class ConnectionDetail extends Connection {
         // connection details block
         Assert.assertTrue(appiumDriver.findElement(countryFlag).isDisplayed(), "flag didn't displayed");
         Assert.assertEquals(appiumDriver.findElement(vpnServer).getText(),
-                serveName, "server name was incorrect");
+                server.name, "server name was incorrect");
         Assert.assertEquals(appiumDriver.findElement(titleVpnIp).getText(),
                 "VPN IP:", "VPN IP label was incorrect");
         String vpnIp = appiumDriver.findElement(ip).getText();

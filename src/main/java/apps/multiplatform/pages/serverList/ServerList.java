@@ -63,7 +63,7 @@ public class ServerList extends BasePage {
     }
 
     @Step("tap on server")
-    public ConnectionDetail tapServer(String serverName) {
+    public ConnectionDetail tapServer(Server server) {
         var names = appiumDriver
                 .findElement(this.listID)
                 .findElements(this.serverName);
@@ -71,19 +71,19 @@ public class ServerList extends BasePage {
         for (var element : names) {
             var text = element.getText();
             if (!(text.contains("(") || text.contains(")"))) {
-                if (text.equals(serverName)) {
+                if (text.equals(server.name)) {
                     element.click();
                     return new ConnectionDetail(customDriver);
                 }
             }
         }
-        Assert.fail("can't find server with name " + serverName);
+        Assert.fail("can't find server with name " + server.name);
         return new ConnectionDetail(customDriver);
     }
 
     @Step("open cluster")
-    public ServerList openCluster(String cluster) throws InterruptedException {
-        findCluster(cluster).findElement(button).click();
+    public ServerList openCluster(Server server) throws InterruptedException {
+        findCluster(server).findElement(button).click();
         return this;
     }
 
@@ -93,6 +93,7 @@ public class ServerList extends BasePage {
 
         String currentName = "";
         int index = 0;
+        int indexNumber = 0;
 
         //find groups
         WebElement listID = appiumDriver.findElement(this.listID);
@@ -120,7 +121,8 @@ public class ServerList extends BasePage {
             currentGroup.findElement(this.button).click();
 
             //pars opened list
-            servers.addAll(parsServers(serverName));
+            servers.addAll(parsServers(indexNumber, serverName));
+            indexNumber++;
 
             //close list
             closeList(serverName);
@@ -135,7 +137,7 @@ public class ServerList extends BasePage {
         return servers;
     }
 
-    private List<Server> parsServers(String serverName) {
+    private List<Server> parsServers(int indexNumber, String serverName) {
         List<Server> servers = new ArrayList<>();
         var names = appiumDriver
                 .findElement(this.listID)
@@ -144,7 +146,7 @@ public class ServerList extends BasePage {
         for (var element : names) {
             var text = element.getText();
             if (!(text.contains("(") || text.contains(")"))) {
-                servers.add(new Server(serverName, text));
+                servers.add(new Server(indexNumber, serverName, text));
             }
         }
         return servers;
@@ -195,7 +197,7 @@ public class ServerList extends BasePage {
     }
 
 
-    private WebElement findCluster(String cluster) throws InterruptedException {
+    public WebElement findCluster(Server server) throws InterruptedException {
         new FingerMove(appiumDriver).doSwipe(0.5, 0.8, 0.5, 0.66);
 
         //find groups
@@ -215,16 +217,18 @@ public class ServerList extends BasePage {
                 try {
                     s = serverGroup.findElement(this.serverName).getText();
                 } catch (org.openqa.selenium.NoSuchElementException e) {
-                    new FingerMove(customDriver.getAppiumDriver()).doSwipe(0.5, 0.8, 0.5, 0.75);
+                    new FingerMove(customDriver.getAppiumDriver())
+                            .doSwipe(0.5, 0.8, 0.5, 0.75);
                     continue;
                 }
-                if (s.equals(cluster)) {
+                if (s.equals(server.cluster)) {
                     return serverGroup;
                 }
             }
-            new FingerMove(customDriver.getAppiumDriver()).doSwipe(0.5, 0.8, 0.5, 0.4);
+            new FingerMove(customDriver.getAppiumDriver())
+                    .doSwipe(0.5, 0.8, 0.5, 0.4);
         }
-        Assert.fail("can't find cluster with name " + cluster);
+        Assert.fail("can't find cluster with name " + server.cluster);
         return null;
     }
 }

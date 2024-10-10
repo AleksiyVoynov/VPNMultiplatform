@@ -3,11 +3,13 @@ package apps.multiplatform;
 import apps.BaseTest;
 import apps.multiplatform.pages.mainPage.MainScreen;
 import apps.multiplatform.pages.serverList.Server;
+import apps.multiplatform.utils.ServerUtils;
 import io.qameta.allure.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +19,17 @@ public class ConnectivityTest extends BaseTest {
     private List<Server> servers;
 
     @BeforeClass
-    public void generateServers() {
-        servers = new ArrayList<>();
-        servers.add(new Server("Sweden3 ( 5 )", "Sweden11"));
-        servers.add(new Server("Germany36 ( 5 )", "Germany104"));
-        servers.add(new Server("France1078 ( 5 )", "France389"));
-        servers.add(new Server("LosAngeles5 ( 2 )", "LosAngeles15"));
+    public void generateServers() throws IOException {
+        String filePath = "src/main/java/apps/multiplatform/utils/servers.json";
+        servers = new ServerUtils().readServersFromJsonFile(filePath);
+/*        servers = new MainScreen(customDriver)
+                .tapIKEv2()
+                .tapFastestLocation()
+                .tapFree()
+                .serversParsing();*/
+
+        /*String filePath = "src/main/java/apps/multiplatform/utils/servers.json";
+        new ServerUtils().writeServersToJsonFile(servers, filePath);*/
 
         Allure.addAttachment("number of servers", String.valueOf(servers.size()));
     }
@@ -38,7 +45,7 @@ public class ConnectivityTest extends BaseTest {
 
     @Test(priority = 1, description = "check connection IKEv2", dataProvider = "serverData")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("IKEv2 FREE")
+    @Story("FREE IKEv2")
     @Description("""
             Test Description:
             This test checks the availability of servers for the IKEv2 protocol.
@@ -48,9 +55,9 @@ public class ConnectivityTest extends BaseTest {
                 .tapIKEv2()
                 .tapFastestLocation()
                 .tapFree()
-                .openCluster(server.cluster)
-                .tapServer(server.name)
-                .validateConnectionDetailPage(server.name)
+                .openCluster(server)
+                .tapServer(server)
+                .validateConnectionDetailPage(server)
                 .tapBack();
                 //.tapPowerButton();
 

@@ -1,9 +1,10 @@
 package apps.multiplatform.temp;
 
 import apps.BaseTest;
-import apps.common.FingerMove;
 import apps.multiplatform.pages.mainPage.MainScreen;
 import apps.multiplatform.pages.serverList.Server;
+import apps.multiplatform.utils.ServerUtils;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -11,56 +12,48 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.util.*;
 
 public class TempTest extends BaseTest {
-    private List<String> serverList;
+    private List<Server> servers;
 
     @BeforeClass
-    public void generateServers() {
-        serverList = new ArrayList<>();
-        serverList.add("German 32");
+    public void generateServers() throws IOException {
+        servers = new ArrayList<>();
+        servers.add(new Server(18, "Germany108 ( 4 )", "Germany30"));
     }
 
     @DataProvider(name = "serverData")
     public Object[][] serverData() {
-        Object[][] data = new Object[serverList.size()][1];
-        for (int i = 0; i < serverList.size(); i++) {
-            data[i][0] = serverList.get(i);
+        Object[][] data = new Object[servers.size()][1];
+        for (int i = 0; i < servers.size(); i++) {
+            data[i][0] = servers.get(i);
         }
         return data;
     }
 
-    @Test(priority = 1, description = "check connection IKEv2", dataProvider = "serverData")
-    @Severity(SeverityLevel.CRITICAL)
-    @Description("""
-            Test Description:
-            This test checks the availability of servers for the IKEv2 protocol.
-            The check is performed on each server in the list for free user""")
-    public void Temp1(String server) {
+    @Test(priority = 1, description = "parsing server list FREE", dataProvider = "serverData")
+    public void Temp1(Server server) throws InterruptedException {
+        new MainScreen(customDriver)
+                .tapIKEv2()
+                .tapFastestLocation()
+                .tapFree()
+                .findCluster(server);
+
+        int a = 0;
+    }
+
+    @Test(priority = 2, description = "parsing server list FREE", dataProvider = "serverData", enabled = false)
+    public void Temp2() throws IOException {
         List<Server> servers = new MainScreen(customDriver)
                 .tapIKEv2()
                 .tapFastestLocation()
                 .tapFree()
                 .serversParsing();
 
-        System.out.println("Servers Quantity: " + servers.size());
-        servers.forEach(System.out::println);
-    }
-
-    @Test(priority = 1, description = "check connection IKEv2", dataProvider = "serverData")
-    @Severity(SeverityLevel.CRITICAL)
-    @Description("""
-            Test Description:
-            This test checks the availability of servers for the IKEv2 protocol.
-            The check is performed on each server in the list for free user""")
-    public void Temp2(String server) {
-        new MainScreen(customDriver)
-                .tapIKEv2()
-                .tapFastestLocation()
-                .tapFree();
-        new FingerMove(customDriver.getAppiumDriver()).doSwipe(0.5, 0.8, 0.5, 0.75);//
-
+        String filePath = "src/main/java/apps/multiplatform/utils/servers.json";
+        new ServerUtils().writeServersToJsonFile(servers, filePath);
     }
 
 
