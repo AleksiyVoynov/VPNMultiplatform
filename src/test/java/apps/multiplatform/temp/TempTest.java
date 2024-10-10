@@ -4,10 +4,6 @@ import apps.BaseTest;
 import apps.multiplatform.pages.mainPage.MainScreen;
 import apps.multiplatform.pages.serverList.Server;
 import apps.multiplatform.utils.ServerUtils;
-import io.qameta.allure.Allure;
-import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -19,9 +15,11 @@ public class TempTest extends BaseTest {
     private List<Server> servers;
 
     @BeforeClass
-    public void generateServers() throws IOException {
+    public void generateServers() {
         servers = new ArrayList<>();
-        servers.add(new Server(18, "Germany108 ( 4 )", "Germany30"));
+        servers.add(new Server(4, "Sweden3 ( 5 )", "Sweden11"));
+        servers.add(new Server(92, "France1032 ( 5 )", "France156"));
+        servers.add(new Server(189, "LosAngeles5 ( 2 )", "LosAngeles15"));
     }
 
     @DataProvider(name = "serverData")
@@ -34,14 +32,15 @@ public class TempTest extends BaseTest {
     }
 
     @Test(priority = 1, description = "parsing server list FREE", dataProvider = "serverData")
-    public void Temp1(Server server) throws InterruptedException {
+    public void Temp1(Server server)  {
         new MainScreen(customDriver)
                 .tapIKEv2()
                 .tapFastestLocation()
                 .tapFree()
-                .findCluster(server);
-
-        int a = 0;
+                .openCluster(server)
+                .tapServer(server)
+                .validateConnection(server)
+                .tapBack();
     }
 
     @Test(priority = 2, description = "parsing server list FREE", dataProvider = "serverData", enabled = false)

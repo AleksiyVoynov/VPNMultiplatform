@@ -3,13 +3,11 @@ package apps.multiplatform;
 import apps.BaseTest;
 import apps.multiplatform.pages.mainPage.MainScreen;
 import apps.multiplatform.pages.serverList.Server;
-import apps.multiplatform.utils.ServerUtils;
 import io.qameta.allure.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +17,13 @@ public class ConnectivityTest extends BaseTest {
     private List<Server> servers;
 
     @BeforeClass
-    public void generateServers() throws IOException {
-        String filePath = "src/main/java/apps/multiplatform/utils/servers.json";
-        servers = new ServerUtils().readServersFromJsonFile(filePath);
+    public void generateServers() {
+        servers = new ArrayList<>();
+        servers.add(new Server(4, "Sweden3 ( 5 )", "Sweden11"));
+        servers.add(new Server(92, "France1032 ( 5 )", "France156"));
+        servers.add(new Server(189, "LosAngeles5 ( 2 )", "LosAngeles15"));
+/*        String filePath = "src/main/java/apps/multiplatform/utils/servers.json";
+        servers = new ServerUtils().readServersFromJsonFile(filePath);*/
 /*        servers = new MainScreen(customDriver)
                 .tapIKEv2()
                 .tapFastestLocation()
@@ -47,22 +49,17 @@ public class ConnectivityTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Story("FREE IKEv2")
     @Description("""
-            Test Description:
-            This test checks the availability of servers for the IKEv2 protocol.
-            The check is performed on each server in the list for free user""")
-    public void Connectivity(Server server) throws InterruptedException {
+            This test checks the availability of the server for the IKEv2 protocol.
+            Connection to the server via UI
+            Check whether there was a connection to the server""")
+    public void Connectivity(Server server) {
         new MainScreen(customDriver)
                 .tapIKEv2()
                 .tapFastestLocation()
                 .tapFree()
                 .openCluster(server)
                 .tapServer(server)
-                .validateConnectionDetailPage(server)
+                .validateConnection(server)
                 .tapBack();
-                //.tapPowerButton();
-
-        /*new ConnectionReport(customDriver)
-                .validateConnectionReportPage()
-                .tapBack();*/
     }
 }

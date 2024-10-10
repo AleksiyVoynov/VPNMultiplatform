@@ -82,7 +82,7 @@ public class ServerList extends BasePage {
     }
 
     @Step("open cluster")
-    public ServerList openCluster(Server server) throws InterruptedException {
+    public ServerList openCluster(Server server) {
         findCluster(server).findElement(button).click();
         return this;
     }
@@ -197,12 +197,19 @@ public class ServerList extends BasePage {
     }
 
 
-    public WebElement findCluster(Server server) throws InterruptedException {
+    public WebElement findCluster(Server server) {
         new FingerMove(appiumDriver).doSwipe(0.5, 0.8, 0.5, 0.66);
 
         //find groups
         WebElement listID = appiumDriver.findElement(this.listID);
         List<WebElement> serverGroups = listID.findElements(this.serverGroups);
+
+        //scroll to needed element +-
+        for (int i = 0; i < server.clusterIndex / (serverGroups.size() - 1); i++) {
+            new FingerMove(customDriver.getAppiumDriver())
+                    .doSwipe(0.5, 0.8, 0.5, 0.31);
+            pause(500);
+        }
 
         //get group
         WebElement currentGroup = serverGroups.get(0);
@@ -226,7 +233,7 @@ public class ServerList extends BasePage {
                 }
             }
             new FingerMove(customDriver.getAppiumDriver())
-                    .doSwipe(0.5, 0.8, 0.5, 0.4);
+                    .doSwipe(0.5, 0.8, 0.5, 0.5);
         }
         Assert.fail("can't find cluster with name " + server.cluster);
         return null;

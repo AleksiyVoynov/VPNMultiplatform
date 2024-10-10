@@ -96,4 +96,13 @@ public class BasePage {
             throw new RuntimeException(r);
         }
     }
+
+    public void pause(int milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

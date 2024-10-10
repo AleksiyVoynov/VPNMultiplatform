@@ -66,4 +66,31 @@ public class ConnectionDetail extends Connection {
         return new ConnectionDetail(customDriver);
     }
 
+    @Step("validate connection")
+    public ConnectionDetail validateConnection(Server server) {
+        Assert.assertEquals(fluentVisibility(vpnServer).getText(),
+                server.name, "server name was incorrect");
+
+        String vpnIp = appiumDriver.findElement(ip).getText();
+        Assert.assertFalse(vpnIp.isEmpty(), "VPN IP didn't displayed");
+
+        String cityText = appiumDriver.findElement(city).getText();
+        Assert.assertFalse(cityText.isEmpty(), "city didn't displayed");
+
+        String countryText = appiumDriver.findElement(country).getText();
+        Assert.assertFalse(countryText.isEmpty(), "country didn't displayed");
+
+        // share block
+        String attachmentTest = """
+        VPN IP: %s
+        City: %s
+        Country: %s
+        """.formatted(vpnIp, cityText, countryText);
+
+        Allure.addAttachment("connection details text", attachmentTest);
+        attachScreenToReport("connection details screen", By.id("com.free.vpn.super.hotspot.open:id/layout_ip_info"));
+
+        return new ConnectionDetail(customDriver);
+    }
+
 }
