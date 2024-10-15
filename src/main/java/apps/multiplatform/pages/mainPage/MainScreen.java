@@ -7,6 +7,9 @@ import driver.CustomDriver;
 import io.appium.java_client.AppiumBy;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
+
+import java.time.Duration;
 
 public class MainScreen extends BasePage {
     public Menu menu;
@@ -24,7 +27,22 @@ public class MainScreen extends BasePage {
 
     public MainScreen(CustomDriver customDriver) {
         super(customDriver);
-        menu = new Menu(this.customDriver);
+        menu = new Menu();
+
+        try {
+            Menu menu = new Menu();
+            appiumDriver.findElement(menu.mainNavView);
+            appiumDriver.findElement(menu.backButton).click();
+        } catch (org.openqa.selenium.NoSuchElementException ignored) {
+
+        }
+
+        try {
+            fluentVisibility(connectButton, Duration.ofSeconds(1));
+        } catch (TimeoutException ignored) {
+            appiumDriver.navigate().back();
+            fluentVisibility(connectButton, Duration.ofSeconds(1));
+        }
     }
 
     @Step("tap on IKEv2 protocol")

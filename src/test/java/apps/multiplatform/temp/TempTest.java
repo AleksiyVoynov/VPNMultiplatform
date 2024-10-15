@@ -4,9 +4,11 @@ import apps.BaseTest;
 import apps.multiplatform.pages.mainPage.MainScreen;
 import apps.multiplatform.pages.serverList.Server;
 import apps.multiplatform.utils.ServerUtils;
+import com.google.common.collect.ImmutableMap;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 
 import java.io.IOException;
 import java.util.*;
@@ -31,8 +33,21 @@ public class TempTest extends BaseTest {
         return data;
     }
 
-    @Test(priority = 1, description = "parsing server list FREE", dataProvider = "serverData")
-    public void Temp1(Server server)  {
+    @Test(priority = 1)
+    public void Temp1() {
+        new MainScreen(customDriver);
+
+        String currentActivity = customDriver.getAppiumDriver().executeScript("mobile: shell", ImmutableMap.of(
+                "command", "dumpsys window | grep mCurrentFocus"
+        )).toString();
+
+
+        int a = 0;
+
+    }
+
+/*    @Test(priority = 3, description = "parsing server list FREE", dataProvider = "serverData", enabled = false)
+    public void Temp3(Server server) {
         new MainScreen(customDriver)
                 .tapIKEv2()
                 .tapFastestLocation()
@@ -41,15 +56,14 @@ public class TempTest extends BaseTest {
                 .tapServer(server)
                 .validateConnection(server)
                 .tapBack();
-    }
+    }*/
 
-    @Test(priority = 2, description = "parsing server list FREE", dataProvider = "serverData", enabled = false)
+    @Test(priority = 2, description = "parsing server list FREE")
     public void Temp2() throws IOException {
-        List<Server> servers = new MainScreen(customDriver)
+        new MainScreen(customDriver)
                 .tapIKEv2()
                 .tapFastestLocation()
-                .tapFree()
-                .serversParsing();
+                .tapFree();
 
         String filePath = "src/main/java/apps/multiplatform/utils/servers.json";
         new ServerUtils().writeServersToJsonFile(servers, filePath);
@@ -133,5 +147,39 @@ public class TempTest extends BaseTest {
         }
 
         return serverNames;
+    }*/
+
+    /*public static void main(String[] args) {
+        // Заданные значения n и t
+        double[] n_values = {1, 500, 1000};
+        double[] t_values = {16, 45, 16};
+
+        // Создаем объект для простой линейной регрессии
+        SimpleRegression regression = new SimpleRegression();
+
+        // Добавляем данные для регрессии
+        for (int i = 0; i < n_values.length; i++) {
+            regression.addData(n_values[i], t_values[i]);
+        }
+
+        // Получаем коэффициенты линейного уравнения
+        double a = regression.getSlope();
+        double b = regression.getIntercept();
+
+        // Рассчитываем время для каждого сервера
+        int n_servers = 1000;
+        double total_time_seconds = 0;
+        for (int i = 1; i <= n_servers; i++) {
+            double time = a * i + b;
+            total_time_seconds += time;
+        }
+
+        // Переводим в часы, минуты и секунды
+        long hours = (long) (total_time_seconds / 3600);
+        long minutes = (long) ((total_time_seconds % 3600) / 60);
+        long seconds = (long) (total_time_seconds % 60);
+
+        // Выводим результат
+        System.out.println("Часы: " + hours + ", Минуты: " + minutes + ", Секунды: " + seconds);
     }*/
 }

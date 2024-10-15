@@ -8,7 +8,9 @@ import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
 
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.openqa.selenium.interactions.PointerInput.Kind.TOUCH;
 
@@ -30,20 +32,49 @@ public class FingerMove {
         appiumDriver.perform(List.of(clickPosition));
     }
 
-    @Step("swipe from {startX}, {startY} to {endX}, {endY}")
-    public void doSwipe(int startX, int startY, int endX, int endY) {
+    @Step("swipe from {startXPercent}, {startYPercent} to {endXPercent}, {endYPercent}")
+    public void doSwipe(double startXPercent, double startYPercent, double endXPercent, double endYPercent) {
+
+        Map<String, Integer> coordinates = getCoordinates(startXPercent, startYPercent, endXPercent, endYPercent);
+
         PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+
         Sequence swipe = new Sequence(finger, 0);
-        swipe.addAction(finger.createPointerMove(Duration.ofMillis(0), PointerInput.Origin.viewport(), startX, startY));
+        swipe.addAction(finger.createPointerMove(Duration.ofMillis(0), PointerInput.Origin.viewport(),
+                coordinates.get("startX"),
+                coordinates.get("startY")));
         swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
-        swipe.addAction(new Pause(finger, Duration.ofMillis(600)));
-        swipe.addAction(finger.createPointerMove(Duration.ofMillis(600), PointerInput.Origin.viewport(), endX, endY));
+        //swipe.addAction(new Pause(finger, Duration.ofMillis(600)));
+        swipe.addAction(finger.createPointerMove(Duration.ofMillis(600), PointerInput.Origin.viewport(),
+                coordinates.get("endX"),
+                coordinates.get("endY")));
         swipe.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
         appiumDriver.perform(List.of(swipe));
     }
 
-    public void doSwipe(double startXPercent, double startYPercent, double endXPercent, double endYPercent) {
+    @Step("swipe from {startXPercent}, {startYPercent} to {endXPercent}, {endYPercent}")
+    public void doQuickSwipe(double startXPercent, double startYPercent, double endXPercent, double endYPercent) {
 
+        Map<String, Integer> coordinates = getCoordinates(startXPercent, startYPercent, endXPercent, endYPercent);
+
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+
+        Sequence swipe = new Sequence(finger, 0);
+        swipe.addAction(finger.createPointerMove(Duration.ofMillis(0), PointerInput.Origin.viewport(),
+                coordinates.get("startX"),
+                coordinates.get("startY")));
+        swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+        swipe.addAction(finger.createPointerMove(Duration.ofMillis(100), PointerInput.Origin.viewport(),
+                coordinates.get("endX"),
+                coordinates.get("endY")));
+        swipe.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+        appiumDriver.perform(List.of(swipe));
+    }
+
+    private Map<String, Integer> getCoordinates(double startXPercent,
+                                                double startYPercent,
+                                                double endXPercent,
+                                                double endYPercent) {
         Dimension size = appiumDriver.manage().window().getSize();
         int width = size.width;
         int height = size.height;
@@ -53,6 +84,11 @@ public class FingerMove {
         int endX = (int) (width * endXPercent);
         int endY = (int) (height * endYPercent);
 
-        doSwipe(startX, startY, endX, endY);
+        Map<String, Integer> map = new HashMap<>();
+        map.put("startX", startX);
+        map.put("startY", startY);
+        map.put("endX", endX);
+        map.put("endY", endY);
+        return map;
     }
 }

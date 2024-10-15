@@ -59,11 +59,8 @@ public class BaseTest implements IHookable {
 
         if (device instanceof Android) {
             customDriver = new AndroidConfig().initDriver(device);
-            AndroidDriver androidDriver = (AndroidDriver) customDriver.getDriver();
-            androidDriver.activateApp(customDriver.getDevice().app.appPackage);
         } else if (device instanceof IOS) {
             customDriver = new IOSConfig().initDriver(device);
-            //todo the same as android
         } else {
             Assert.fail("unknown device platform");
         }

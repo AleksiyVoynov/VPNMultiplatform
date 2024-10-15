@@ -7,10 +7,12 @@ import driver.CustomDriver;
 import io.appium.java_client.AppiumBy;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ServerList extends BasePage {
@@ -82,8 +84,8 @@ public class ServerList extends BasePage {
     }
 
     @Step("open cluster")
-    public ServerList openCluster(Server server) {
-        findCluster(server).findElement(button).click();
+    public ServerList openCluster(Server server, int clusters) {
+        findCluster(server, clusters).findElement(button).click();
         return this;
     }
 
@@ -152,6 +154,13 @@ public class ServerList extends BasePage {
         return servers;
     }
 
+    private String getLastGroup() {
+        List<WebElement> serverGroups = appiumDriver
+                .findElement(this.listID)
+                .findElements(this.serverGroups);
+        return serverGroups.get(serverGroups.size() - 1).getText();
+    }
+
 
     private boolean checkHasMoreGroups(String currentCluster) {
         List<WebElement> serverGroups = appiumDriver
@@ -185,7 +194,7 @@ public class ServerList extends BasePage {
             String text;
             try {
                 text = group.findElement(this.serverName).getText();
-            } catch (org.openqa.selenium.NoSuchElementException e) {
+            } catch (NoSuchElementException e) {
                 text = "";
             }
 
@@ -197,7 +206,7 @@ public class ServerList extends BasePage {
     }
 
 
-    public WebElement findCluster(Server server) {
+    private WebElement scrollDown(Server server) {
         new FingerMove(appiumDriver).doSwipe(0.5, 0.8, 0.5, 0.66);
 
         //find groups
@@ -206,7 +215,7 @@ public class ServerList extends BasePage {
 
         //scroll to needed element +-
         for (int i = 0; i < server.clusterIndex / (serverGroups.size() - 1); i++) {
-            new FingerMove(customDriver.getAppiumDriver())
+            new FingerMove(appiumDriver)
                     .doSwipe(0.5, 0.8, 0.5, 0.31);
             pause(500);
         }
@@ -219,23 +228,111 @@ public class ServerList extends BasePage {
             //find groups
             serverGroups = appiumDriver.findElement(this.listID).findElements(this.serverGroups);
 
+            String currentGroupName = "";
+
             for (WebElement serverGroup : serverGroups) {
-                String s;
                 try {
-                    s = serverGroup.findElement(this.serverName).getText();
-                } catch (org.openqa.selenium.NoSuchElementException e) {
-                    new FingerMove(customDriver.getAppiumDriver())
+                    currentGroupName = serverGroup.findElement(this.serverName).getText();
+                } catch (NoSuchElementException e) {
+                    new FingerMove(appiumDriver)
                             .doSwipe(0.5, 0.8, 0.5, 0.75);
                     continue;
                 }
-                if (s.equals(server.cluster)) {
+                if (currentGroupName.equals(server.cluster)) {
                     return serverGroup;
                 }
             }
-            new FingerMove(customDriver.getAppiumDriver())
+            new FingerMove(appiumDriver)
                     .doSwipe(0.5, 0.8, 0.5, 0.5);
+
+            if (currentGroupName.equals(getLastGroup())) {
+                break;
+            }
         }
         Assert.fail("can't find cluster with name " + server.cluster);
         return null;
+    }
+
+    private WebElement scrollUp(Server server, int clusters) {
+
+        //find groups
+        WebElement listID = appiumDriver.findElement(this.listID);
+        List<WebElement> serverGroups = listID.findElements(this.serverGroups);
+        Collections.reverse(serverGroups);
+
+        for (WebElement e : serverGroups) {
+            String clusterName = e.findElement(this.serverName).getText();
+            if (clusterName.equals(server.cluster)) {
+                return e;
+            }
+        }
+        //scroll to needed element +-
+        for (int i = 0; i < (clusters - server.clusterIndex) / serverGroups.size() - 1; i++) {
+            new FingerMove(appiumDriver)
+                    .doSwipe(0.5, 0.31, 0.5, 0.8);
+            pause(500);
+        }
+
+        String actuaName = "";
+
+        for (int i = 0; i < 3; i++) {
+            //find groups
+            serverGroups = appiumDriver.findElement(this.listID).findElements(this.serverGroups);
+            Collections.reverse(serverGroups);
+
+            for (WebElement serverGroup : serverGroups) {
+                try {
+                    actuaName = serverGroup.findElement(this.serverName).getText();
+                } catch (NoSuchElementException e) {
+                    new FingerMove(appiumDriver)
+                            .doSwipe(0.5, 0.75, 0.5, 0.8);
+                    continue;
+                }
+                if (actuaName.equals(server.cluster)) {
+                    return serverGroup;
+                }
+            }
+            new FingerMove(appiumDriver)
+                    .doSwipe(0.5, 0.5, 0.5, 0.8);
+        }
+
+        Assert.fail("can't find cluster with name " + server.cluster);
+        return null;
+    }
+
+    private WebElement findCluster(Server server, int clusters) {
+        if (server.clusterIndex > clusters / 2) {
+            scrollToEndOfList();
+            return scrollUp(server, clusters);
+        } else {
+            return scrollDown(server);
+        }
+    }
+
+
+    private void scrollToEndOfList() {
+        String previousLastName = "";
+        boolean isEnd = false;
+
+        while (!isEnd) {
+            List<WebElement> elements = appiumDriver.findElement(this.listID).findElements(this.serverGroups);
+
+            String currentLastName;
+            try {
+                currentLastName = elements.get(elements.size() - 1).findElement(this.serverName).getText();
+            } catch (NoSuchElementException e) {
+                new FingerMove(appiumDriver)
+                        .doSwipe(0.5, 0.8, 0.5, 0.75);
+                continue;
+            }
+
+            if (!previousLastName.equals(currentLastName)) {
+                previousLastName = currentLastName;
+                new FingerMove(appiumDriver)
+                        .doQuickSwipe(0.5, 0.85, 0.5, 0.15);
+            } else {
+                isEnd = true;
+            }
+        }
     }
 }

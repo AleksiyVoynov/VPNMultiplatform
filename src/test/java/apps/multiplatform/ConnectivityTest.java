@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,24 +16,33 @@ import java.util.List;
 public class ConnectivityTest extends BaseTest {
 
     private List<Server> servers;
+    private int clusters;
 
     @BeforeClass
-    public void generateServers() {
+    public void generateServers() throws IOException {
         servers = new ArrayList<>();
-        servers.add(new Server(4, "Sweden3 ( 5 )", "Sweden11"));
-        servers.add(new Server(92, "France1032 ( 5 )", "France156"));
-        servers.add(new Server(189, "LosAngeles5 ( 2 )", "LosAngeles15"));
+        servers.add(new Server(0, "ikev2-42 ( 1 )", "ikev2-42"));
+        servers.add(new Server(21, "Germany13 ( 4 )", "Germany60"));
+        servers.add(new Server(42, "Germany9 ( 3 )", "Germany35"));
+        servers.add(new Server(66, "Netherlands3 ( 5 )", "Netherlands14"));
+        servers.add(new Server(90, "France1030 ( 5 )", "France147"));
+        servers.add(new Server(119, "London ( 5 )", "London4"));
+        servers.add(new Server(142, "Singapore3 ( 1 )", "Singapore11"));
+        servers.add(new Server(173, "Miami6 ( 5 )", "Miami28"));
+        servers.add(new Server(188, "LosAngeles5 ( 2 )", "LosAngeles16"));
 /*        String filePath = "src/main/java/apps/multiplatform/utils/servers.json";
         servers = new ServerUtils().readServersFromJsonFile(filePath);*/
 /*        servers = new MainScreen(customDriver)
                 .tapIKEv2()
                 .tapFastestLocation()
                 .tapFree()
-                .serversParsing();*/
+                .serversParsing();
 
-        /*String filePath = "src/main/java/apps/multiplatform/utils/servers.json";
+        String filePath = "src/main/java/apps/multiplatform/utils/servers.json";
         new ServerUtils().writeServersToJsonFile(servers, filePath);*/
 
+        //clusters = servers.get(servers.size() -1).clusterIndex;
+        clusters = 189;
         Allure.addAttachment("number of servers", String.valueOf(servers.size()));
     }
 
@@ -57,7 +67,7 @@ public class ConnectivityTest extends BaseTest {
                 .tapIKEv2()
                 .tapFastestLocation()
                 .tapFree()
-                .openCluster(server)
+                .openCluster(server, clusters)
                 .tapServer(server)
                 .validateConnection(server)
                 .tapBack();
