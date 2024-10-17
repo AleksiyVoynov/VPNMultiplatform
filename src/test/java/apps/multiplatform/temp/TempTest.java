@@ -3,8 +3,10 @@ package apps.multiplatform.temp;
 import apps.BaseTest;
 import apps.multiplatform.pages.mainPage.MainScreen;
 import apps.multiplatform.pages.serverList.Server;
+import apps.multiplatform.pages.serverList.ServerList;
 import apps.multiplatform.utils.ServerUtils;
 import com.google.common.collect.ImmutableMap;
+import io.qameta.allure.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -14,14 +16,20 @@ import java.io.IOException;
 import java.util.*;
 
 public class TempTest extends BaseTest {
-    private List<Server> servers;
+    private List<Server> servers = new ArrayList<>();
+    private int clusters;
 
-    @BeforeClass
-    public void generateServers() {
-        servers = new ArrayList<>();
-        servers.add(new Server(4, "Sweden3 ( 5 )", "Sweden11"));
-        servers.add(new Server(92, "France1032 ( 5 )", "France156"));
-        servers.add(new Server(189, "LosAngeles5 ( 2 )", "LosAngeles15"));
+    @BeforeClass(description = "for range check")
+    public void generateServers2() {
+        servers.add(new Server(42, "Germany9 ( 3 )", "Germany35"));
+
+        clusters = new MainScreen(customDriver)
+                .tapIKEv2()
+                .tapFastestLocation()
+                .tapFree()
+                .getAllClusters().size();
+
+        Allure.addAttachment("number of servers", String.valueOf(servers.size()));
     }
 
     @DataProvider(name = "serverData")
@@ -33,16 +41,22 @@ public class TempTest extends BaseTest {
         return data;
     }
 
-    @Test(priority = 1)
-    public void Temp1() {
-        new MainScreen(customDriver);
-
-        String currentActivity = customDriver.getAppiumDriver().executeScript("mobile: shell", ImmutableMap.of(
-                "command", "dumpsys window | grep mCurrentFocus"
-        )).toString();
-
-
-        int a = 0;
+    @Test(priority = 1, description = "check connection IKEv2", dataProvider = "serverData")
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("FREE IKEv2")
+    @Description("""
+            This test checks the availability of the server for the IKEv2 protocol.
+            Connection to the server via UI
+            Check whether there was a connection to the server""")
+    public void Connectivity(Server server) {
+        new MainScreen(customDriver)
+                .tapIKEv2()
+                .tapFastestLocation()
+                .tapFree()
+                .openCluster(server, clusters)
+                .tapServer(server)
+                .validateConnection(server)
+                .tapBack();
 
     }
 
@@ -58,7 +72,7 @@ public class TempTest extends BaseTest {
                 .tapBack();
     }*/
 
-    @Test(priority = 2, description = "parsing server list FREE")
+    @Test(priority = 2, description = "parsing server list FREE", enabled = false)
     public void Temp2() throws IOException {
         new MainScreen(customDriver)
                 .tapIKEv2()

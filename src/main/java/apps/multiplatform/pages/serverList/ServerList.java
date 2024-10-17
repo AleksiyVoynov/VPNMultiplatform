@@ -11,9 +11,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class ServerList extends BasePage {
 
@@ -85,7 +83,18 @@ public class ServerList extends BasePage {
 
     @Step("open cluster")
     public ServerList openCluster(Server server, int clusters) {
-        findCluster(server, clusters).findElement(button).click();
+        if (server.clusterIndex > clusters / 2) {
+            scrollToEndOfList();
+            Objects.requireNonNull(scrollUp(server, clusters)).findElement(button).click();
+        } else {
+            Objects.requireNonNull(scrollDown(server)).findElement(button).click();
+        }
+        return this;
+    }
+
+    @Step("open cluster")
+    public ServerList openCluster(Server server) {
+        Objects.requireNonNull(scrollDown(server)).findElement(button).click();
         return this;
     }
 
@@ -224,11 +233,14 @@ public class ServerList extends BasePage {
         WebElement currentGroup = serverGroups.get(0);
         String serverName = currentGroup.findElement(this.serverName).getText();
 
+        int index;
+        String currentGroupName = "";
+
         while (checkHasMoreGroups(serverName)) {
             //find groups
             serverGroups = appiumDriver.findElement(this.listID).findElements(this.serverGroups);
 
-            String currentGroupName = "";
+
 
             for (WebElement serverGroup : serverGroups) {
                 try {
@@ -245,7 +257,8 @@ public class ServerList extends BasePage {
             new FingerMove(appiumDriver)
                     .doSwipe(0.5, 0.8, 0.5, 0.5);
 
-            if (currentGroupName.equals(getLastGroup())) {
+            index = getNextIndex(currentGroupName);
+            if (index == -1) {
                 break;
             }
         }
@@ -300,15 +313,6 @@ public class ServerList extends BasePage {
         return null;
     }
 
-    private WebElement findCluster(Server server, int clusters) {
-        if (server.clusterIndex > clusters / 2) {
-            scrollToEndOfList();
-            return scrollUp(server, clusters);
-        } else {
-            return scrollDown(server);
-        }
-    }
-
 
     private void scrollToEndOfList() {
         String previousLastName = "";
@@ -334,5 +338,40 @@ public class ServerList extends BasePage {
                 isEnd = true;
             }
         }
+    }
+
+    public List<String> getAllClusters() {
+        List<String> serverNames = new ArrayList<>();
+        Set<String> seenServers = new HashSet<>();
+        boolean isEndOfList = false;
+
+        while (!isEndOfList) {
+            List<WebElement> serverElements = appiumDriver.findElement(this.listID).findElements(this.serverName);
+
+            List<String> currentScreenServers = new ArrayList<>();
+            for (WebElement element : serverElements) {
+                String serverName = element.getText();
+                currentScreenServers.add(serverName);
+                if (!seenServers.contains(serverName)) {
+                    serverNames.add(serverName);
+                    seenServers.add(serverName);
+                }
+            }
+
+            new FingerMove(appiumDriver).doSwipe(0.5, 0.8, 0.5, 0.31);
+
+            List<WebElement> newServerElements = appiumDriver.findElement(this.listID).findElements(this.serverName);
+
+            List<String> afterSwipeScreenServers = new ArrayList<>();
+            for (WebElement element : newServerElements) {
+                afterSwipeScreenServers.add(element.getText());
+            }
+
+            if (currentScreenServers.equals(afterSwipeScreenServers)) {
+                isEndOfList = true;
+            }
+        }
+
+        return serverNames;
     }
 }
