@@ -3,10 +3,19 @@ package apps.multiplatform.pages.menu;
 import apps.multiplatform.BasePage;
 import apps.multiplatform.pages.login.LogIn;
 import apps.multiplatform.pages.mainPage.MainScreen;
+import com.google.common.collect.ImmutableMap;
+import configs.devices.Android;
+import configs.devices.IOS;
 import driver.CustomDriver;
 import io.appium.java_client.AppiumBy;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidStartScreenRecordingOptions;
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.ios.IOSStartScreenRecordingOptions;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+
+import java.time.Duration;
 
 public class Menu extends BasePage {
     private final CustomDriver customDriver;
@@ -29,6 +38,12 @@ public class Menu extends BasePage {
 
     @Step("sign in")
     public MainScreen singIn(String login, String password) {
+        if (customDriver.getDevice() instanceof Android) {
+            appiumDriver.executeScript("mobile: shell", ImmutableMap.of("command", "am force-stop com.android.chrome"));
+        } else if (customDriver.getDevice() instanceof IOS) {
+            System.out.println("you should implement whet it will be needed");
+        }
+
         fluentVisibility(signIn).click();
         new LogIn(customDriver).logIn(login, password);
         return new MainScreen(customDriver);

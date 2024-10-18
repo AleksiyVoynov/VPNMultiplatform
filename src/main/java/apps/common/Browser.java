@@ -29,7 +29,7 @@ public class Browser {
             AndroidDriver androidDriver = (AndroidDriver) customDriver.getDriver();
             androidDriver.activateApp(chromeApp.appPackage);
 
-            new Contexts(customDriver).webViewChrome(chromeApp);
+            new Contexts(customDriver).webViewContext(chromeApp.webViewContext);
 
         } else if (customDriver.getDevice() instanceof IOS) {
 
@@ -39,6 +39,7 @@ public class Browser {
         }
     }
 
+    @Step("close browser")
     public void closeBrowser() {
         if (customDriver.getDevice() instanceof Android) {
             AndroidDriver androidDriver = (AndroidDriver) customDriver.getDriver();

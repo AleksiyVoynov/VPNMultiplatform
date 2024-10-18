@@ -89,6 +89,25 @@ public class BasePage {
         }
     }
 
+    private File getNativeScreenshot() {
+        if (customDriver.getDevice() instanceof IOS) {
+            IOSDriver iosDriver = (IOSDriver) appiumDriver;
+            return iosDriver.getScreenshotAs(OutputType.FILE);
+        } else {
+            AndroidDriver androidDriver = (AndroidDriver) appiumDriver;
+            return androidDriver.getScreenshotAs(OutputType.FILE);
+        }
+    }
+
+    public void attachScreenToReport(String text) {
+        File file = getNativeScreenshot();
+        try (InputStream is = Files.newInputStream(Path.of(file.getPath()))) {
+            Allure.addAttachment(text, is);
+        } catch (IOException r) {
+            throw new RuntimeException(r);
+        }
+    }
+
     public void attachScreenToReport(String text, By by) {
         File file = getNativeScreenshot(by);
         try (InputStream is = Files.newInputStream(Path.of(file.getPath()))) {

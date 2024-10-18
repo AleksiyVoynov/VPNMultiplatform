@@ -61,7 +61,7 @@ public class ConnectionDetail extends Connection {
         """.formatted(vpnIp, cityText, countryText);
 
         Allure.addAttachment("connection details text", attachmentTest);
-        attachScreenToReport("connection details screen", By.id("com.free.vpn.super.hotspot.open:id/layout_ip_info"));
+        attachScreenToReport("connection details screen");
 
         return new ConnectionDetail(customDriver);
     }
@@ -88,7 +88,7 @@ public class ConnectionDetail extends Connection {
         """.formatted(vpnIp, cityText, countryText);
 
         Allure.addAttachment("connection details text", attachmentTest);
-        attachScreenToReport("connection details screen", By.id("com.free.vpn.super.hotspot.open:id/layout_ip_info"));
+        //attachScreenToReport("connection details screen", By.id("com.free.vpn.super.hotspot.open:id/layout_ip_info"));
 
         return new ConnectionDetail(customDriver);
     }

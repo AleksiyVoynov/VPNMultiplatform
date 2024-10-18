@@ -68,7 +68,7 @@ public class SwitchLTEMobileTest extends BaseTest {
                 .tapFree()
                 .openCluster(server, clusters)
                 .tapServer(server)
-                .validateConnection(server);
+                .validateConnectionDetailPage(server);
 
         toggleLTE.lteOFF();
 
@@ -111,7 +111,7 @@ public class SwitchLTEMobileTest extends BaseTest {
                 .tapFree()
                 .openCluster(server, clusters)
                 .tapServer(server)
-                .validateConnection(server);
+                .validateConnectionDetailPage(server);
 
         toggleLTE.lteOFF();
 
@@ -155,7 +155,7 @@ public class SwitchLTEMobileTest extends BaseTest {
                 .tapFree()
                 .openCluster(server, clusters)
                 .tapServer(server)
-                .validateConnection(server);
+                .validateConnectionDetailPage(server);
 
         toggleLTE.lteOFF();
 

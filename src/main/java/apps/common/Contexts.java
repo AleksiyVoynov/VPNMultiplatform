@@ -35,8 +35,8 @@ public class Contexts {
         }
     }
 
-    public void webViewChrome(ChromeApp chromeApp) {
-        ((SupportsContextSwitching) customDriver).context(chromeApp.webViewContext);
+    public void webViewContext(String webViewContext) {
+        ((SupportsContextSwitching) customDriver).context(webViewContext);
     }
 
     public List<String> getContext() {

@@ -60,7 +60,7 @@ public class SwitchWiFiTest extends BaseTest {
                 .tapFree()
                 .openCluster(server, clusters)
                 .tapServer(server)
-                .validateConnection(server);
+                .validateConnectionDetailPage(server);
 
         toggleWiFI.wifiOFF();
 
@@ -103,7 +103,7 @@ public class SwitchWiFiTest extends BaseTest {
                 .tapFree()
                 .openCluster(server, clusters)
                 .tapServer(server)
-                .validateConnection(server);
+                .validateConnectionDetailPage(server);
 
         toggleWiFI.wifiOFF();
 
@@ -146,7 +146,7 @@ public class SwitchWiFiTest extends BaseTest {
                 .tapFree()
                 .openCluster(server, clusters)
                 .tapServer(server)
-                .validateConnection(server);
+                .validateConnectionDetailPage(server);
 
         toggleWiFI.wifiOFF();
 
