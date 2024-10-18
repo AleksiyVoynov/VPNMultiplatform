@@ -11,6 +11,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
+import java.time.Duration;
 import java.util.*;
 
 public class ServerList extends BasePage {
@@ -52,6 +53,7 @@ public class ServerList extends BasePage {
 
     @Step("tap free")
     public ServerList tapFree() {
+        pause(Duration.ofMillis(500));
         fluentVisibility(freeButton).click();
         return this;
     }
@@ -226,7 +228,7 @@ public class ServerList extends BasePage {
         for (int i = 0; i < server.clusterIndex / (serverGroups.size() - 1); i++) {
             new FingerMove(appiumDriver)
                     .doSwipe(0.5, 0.8, 0.5, 0.31);
-            pause(500);
+            pause(Duration.ofMillis(500));
         }
 
         //get group
@@ -283,7 +285,7 @@ public class ServerList extends BasePage {
         for (int i = 0; i < (clusters - server.clusterIndex) / serverGroups.size() - 1; i++) {
             new FingerMove(appiumDriver)
                     .doSwipe(0.5, 0.31, 0.5, 0.8);
-            pause(500);
+            pause(Duration.ofMillis(500));
         }
 
         String actuaName = "";

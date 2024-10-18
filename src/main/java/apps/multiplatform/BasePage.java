@@ -6,6 +6,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -97,12 +98,12 @@ public class BasePage {
         }
     }
 
-    public void pause(int milliseconds) {
+    @Step("make pause")
+    public void pause(Duration duration) {
         try {
-            Thread.sleep(milliseconds);
+            Thread.sleep(duration.toMillis());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-
 }

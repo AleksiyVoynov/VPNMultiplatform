@@ -9,6 +9,7 @@ import configs.devices.IOS;
 import configs.platformConfig.AndroidConfig;
 import configs.platformConfig.IOSConfig;
 import driver.CustomDriver;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidStartScreenRecordingOptions;
 import io.appium.java_client.ios.IOSDriver;
@@ -36,6 +37,7 @@ public class BaseTest implements IHookable {
             new MultiPlatformVPN());
 
     public CustomDriver customDriver;
+    public AppiumDriver appiumDriver;
 
     private final boolean recordingVideo = true;
     private boolean testIsThrowable = true;
@@ -66,6 +68,7 @@ public class BaseTest implements IHookable {
         }
         customDriver.getAppiumDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
         new Contexts(customDriver).nativeContext();
+        appiumDriver = customDriver.getAppiumDriver();
     }
 
     @AfterClass

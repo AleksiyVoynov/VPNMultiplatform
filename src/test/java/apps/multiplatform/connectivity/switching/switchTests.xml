@@ -7,7 +7,8 @@
         <parameter name="uDID" value="R5CX72VNK6H"/>
         <parameter name="app" value="VPNMultiplatform"/>
         <classes>
-            <class name="apps.multiplatform.ConnectivityTest"/>
+            <class name="apps.multiplatform.connectivity.switching.SwitchWiFiTest"/>
+            <class name="apps.multiplatform.connectivity.switching.SwitchLTEMobileTest"/>
         </classes>
     </test>
 </suite>

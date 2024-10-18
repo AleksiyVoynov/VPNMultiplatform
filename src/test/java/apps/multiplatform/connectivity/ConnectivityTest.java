@@ -1,4 +1,4 @@
-package apps.multiplatform;
+package apps.multiplatform.connectivity;
 
 import apps.BaseTest;
 import apps.multiplatform.pages.mainPage.MainScreen;
@@ -20,9 +20,9 @@ public class ConnectivityTest extends BaseTest {
     private int clusters;
 
     @BeforeClass(description = "check all servers in server list", enabled = false)
-    public void generateServers3() {
+    public void precondition() {
         servers = new MainScreen(customDriver)
-                .tapIKEv2()
+                .chooseProtocol()
                 .tapFastestLocation()
                 .tapFree()
                 .serversParsing();
@@ -49,7 +49,7 @@ public class ConnectivityTest extends BaseTest {
         servers.add(new Server(188, "LosAngeles5 ( 2 )", "LosAngeles16"));
 
         clusters = new MainScreen(customDriver)
-                .tapIKEv2()
+                .chooseProtocol()
                 .tapFastestLocation()
                 .tapFree()
                 .getAllClusters().size();
@@ -64,7 +64,7 @@ public class ConnectivityTest extends BaseTest {
         servers = servers.subList(0, 110);
 
         clusters = new MainScreen(customDriver)
-                .tapIKEv2()
+                .chooseProtocol()
                 .tapFastestLocation()
                 .tapFree()
                 .getAllClusters().size();
@@ -92,7 +92,7 @@ public class ConnectivityTest extends BaseTest {
             Check whether there was a connection to the server""")
     public void Connectivity(Server server) {
         new MainScreen(customDriver)
-                .tapIKEv2()
+                .chooseProtocol("IKEv2")
                 .tapFastestLocation()
                 .tapFree()
                 .openCluster(server, clusters)

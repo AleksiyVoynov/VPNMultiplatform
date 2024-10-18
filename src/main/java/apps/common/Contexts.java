@@ -1,6 +1,8 @@
 package apps.common;
 
 import com.google.common.collect.ImmutableMap;
+import configs.app.App;
+import configs.app.ChromeApp;
 import configs.devices.Android;
 import configs.devices.IOS;
 import driver.CustomDriver;
@@ -32,6 +34,11 @@ public class Contexts {
             ((SupportsContextSwitching) customDriver).context(webViewContext);
         }
     }
+
+    public void webViewChrome(ChromeApp chromeApp) {
+        ((SupportsContextSwitching) customDriver).context(chromeApp.webViewContext);
+    }
+
     public List<String> getContext() {
         return new ArrayList<>(((SupportsContextSwitching) customDriver).getContextHandles());
     }
@@ -39,7 +46,7 @@ public class Contexts {
     public void nativeContext() {
         if (customDriver.getDevice() instanceof Android) {
             customDriver.getAppiumDriver().execute(DriverCommand.SWITCH_TO_CONTEXT, ImmutableMap.of("name", "NATIVE_APP"));
-        } else if (customDriver.getDevice() instanceof IOS){
+        } else if (customDriver.getDevice() instanceof IOS) {
             ((SupportsContextSwitching) customDriver).context("NATIVE_APP");
         }
     }

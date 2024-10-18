@@ -12,25 +12,28 @@ import org.openqa.selenium.TimeoutException;
 import java.time.Duration;
 
 public class MainScreen extends BasePage {
-    public Menu menu;
+    public final By menuButton = By.id("com.free.vpn.super.hotspot.open:id/btnMenu");
     public final By crownButton = By.id("com.free.vpn.super.hotspot.open:id/btnPremium");
     public final By locationButton = By.id("com.free.vpn.super.hotspot.open:id/btnLocation");
     public final By browserButton = By.id("com.free.vpn.super.hotspot.open:id/btnBrowser");
     public final By helpButton = By.id("com.free.vpn.super.hotspot.open:id/btnHelp");
+
     public final By serverListLink = By.id("com.free.vpn.super.hotspot.open:id/tv_fastest_server");
     public final By connectButton = By.id("com.free.vpn.super.hotspot.open:id/iv_connect");
     public final By connectStatus = By.id("com.free.vpn.super.hotspot.open:id/tvConnectStatus");
-    public final By modesButtons = AppiumBy.androidUIAutomator("new UiSelector().text(\"Auto\")");
-    public final By protocolAuto = AppiumBy.androidUIAutomator("new UiSelector().text(\"IKEv2\")");
+
+    public final By protocolAuto = AppiumBy.androidUIAutomator("new UiSelector().text(\"Auto\")");
     public final By protocolIKEv2 = AppiumBy.androidUIAutomator("new UiSelector().text(\"IKEv2\")");
+    public final By protocolOpenVPNTCP = AppiumBy.androidUIAutomator("new UiSelector().text(\"OpenVPN TCP\")");
+    public final By protocolOpenVPNUDP = AppiumBy.androidUIAutomator("new UiSelector().text(\"OpenVPN UDP\")");
+    public final By protocolSuper = AppiumBy.androidUIAutomator("new UiSelector().text(\"Super\")");
 
 
     public MainScreen(CustomDriver customDriver) {
         super(customDriver);
-        menu = new Menu();
 
         try {
-            Menu menu = new Menu();
+            Menu menu = new Menu(customDriver);
             appiumDriver.findElement(menu.mainNavView);
             appiumDriver.findElement(menu.backButton).click();
         } catch (org.openqa.selenium.NoSuchElementException ignored) {
@@ -44,10 +47,43 @@ public class MainScreen extends BasePage {
             fluentVisibility(connectButton, Duration.ofSeconds(1));
         }
     }
+    @Step("tap on Auto protocol")
+    public MainScreen chooseProtocol() {
+        fluentVisibility(protocolAuto).click();
+        return this;
+    }
 
-    @Step("tap on IKEv2 protocol")
-    public MainScreen tapIKEv2() {
-        fluentVisibility(protocolIKEv2).click();
+    @Step("tap on protocol")
+    public MainScreen chooseProtocol(String protocol) {
+        switch (protocol) {
+            case "IKEv2":
+                fluentVisibility(protocolIKEv2).click();
+                break;
+
+            case "OpenVPNTCP":
+                fluentVisibility(protocolOpenVPNTCP).click();
+                break;
+
+            case "OpenVPNUDP":
+                fluentVisibility(protocolOpenVPNUDP).click();
+                break;
+
+            case "Super":
+                fluentVisibility(protocolSuper).click();
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unknown protocol " + protocol);
+        }
+
+/*        try {
+            WebElement reconnectButton = appiumDriver.findElement(new Dialog().reconnectButton);
+            if (reconnectButton.isDisplayed()) {
+                reconnectButton.click();
+            }
+        } catch (NoSuchElementException e) {
+            System.out.println("Reconnect button not found, skipping.");
+        }*/
         return this;
     }
 
@@ -72,8 +108,14 @@ public class MainScreen extends BasePage {
     }
 
     @Step("tap disconnect button")
-    private void tapDisconnectButton() {
+    public void tapDisconnectButton() {
         fluentVisibility(connectButton).click();
         fluentVisibility(new Dialog().disconnectButton).click();
+    }
+
+    @Step("open menu")
+    public Menu openMenu() {
+        fluentVisibility(menuButton).click();
+        return new Menu(customDriver);
     }
 }
