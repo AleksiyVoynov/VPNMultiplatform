@@ -73,7 +73,7 @@ public class SwitchWiFiTest extends BaseTest {
         connectionDetail
                 .validateConnectionDetailPage(server);
 
-        browser.openMobileBrowser();//todo steps
+        browser.openMobileBrowser();
 
         try {
             browser.goToURL(expectedURL);

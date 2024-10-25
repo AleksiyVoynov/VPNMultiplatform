@@ -36,7 +36,7 @@ public class ConnectivityTest extends BaseTest {
         Allure.addAttachment("number of servers", String.valueOf(servers.size()));
     }
 
-    @BeforeClass(description = "for range check", enabled = false)
+    @BeforeClass(description = "range: first, between, middle, between, last")
     public void generateServers2() {
         servers.add(new Server(0, "ikev2-42 ( 1 )", "ikev2-42"));
         servers.add(new Server(21, "Germany13 ( 4 )", "Germany60"));
@@ -57,7 +57,7 @@ public class ConnectivityTest extends BaseTest {
         Allure.addAttachment("number of servers", String.valueOf(servers.size()));
     }
 
-    @BeforeClass(description = "for first 100 servers")
+    @BeforeClass(description = "for first 100 servers from JSON", enabled = false)
     public void generateServers() throws IOException {
         String filePath = "src/main/java/apps/multiplatform/utils/servers.json";
         servers = new ServerUtils().readServersFromJsonFile(filePath);

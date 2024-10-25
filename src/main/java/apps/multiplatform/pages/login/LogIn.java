@@ -2,6 +2,7 @@ package apps.multiplatform.pages.login;
 
 import apps.multiplatform.BasePage;
 import apps.common.Contexts;
+import configs.app.ChromeApp;
 import configs.devices.Android;
 import configs.devices.IOS;
 import driver.CustomDriver;

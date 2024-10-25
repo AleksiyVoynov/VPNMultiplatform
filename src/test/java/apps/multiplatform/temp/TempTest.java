@@ -13,12 +13,6 @@ public class TempTest extends BaseTest {
 
     @Test()
     public void Connectivity() {
-        ToggleLTE toggleLTE = new ToggleLTE(customDriver);
-        toggleLTE.lteOFF();
-
-        toggleLTE.lteON();
-        toggleLTE.lteON();
-
         int a = 0;
     }
 

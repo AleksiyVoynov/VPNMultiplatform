@@ -22,9 +22,7 @@ public class Browser {
     @Step("open browser")
     public void openMobileBrowser() {
         if (customDriver.getDevice() instanceof Android) {
-            ArrayList<String> arrayList = new ArrayList<> (((SupportsContextSwitching) customDriver)
-                    .getContextHandles());
-            ChromeApp chromeApp = new ChromeApp(arrayList);
+            ChromeApp chromeApp = new ChromeApp(customDriver);
 
             AndroidDriver androidDriver = (AndroidDriver) customDriver.getDriver();
             androidDriver.activateApp(chromeApp.appPackage);

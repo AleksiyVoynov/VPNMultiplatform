@@ -36,6 +36,14 @@ public class BaseTest implements IHookable {
             "R5CX72VNK6H",
             new MultiPlatformVPN());
 
+/*    private Device device = new IOS(
+            "Iphone",
+            "15",
+            "18.0.1",
+            "00008120-001243C11E3BA01E",
+            new MultiPlatformVPN(),
+            "Oleksii Voinov (Personal Team)");*/
+
     public CustomDriver customDriver;
     public AppiumDriver appiumDriver;
 
