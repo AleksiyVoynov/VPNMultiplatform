@@ -6,9 +6,12 @@ import configs.app.ChromeApp;
 import configs.devices.Android;
 import configs.devices.IOS;
 import driver.CustomDriver;
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.SupportsContextSwitching;
 import org.openqa.selenium.remote.DriverCommand;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +38,14 @@ public class Contexts {
         }
     }
 
+    public void webViewContext(Duration duration) {
+        if (customDriver.getDevice() instanceof Android) {
+            waitContext(webViewContext, duration);
+        } else if (customDriver.getDevice() instanceof IOS) {
+            ((SupportsContextSwitching) customDriver).context(webViewContext);
+        }
+    }
+
     public void webViewContext(String webViewContext) {
         ((SupportsContextSwitching) customDriver).context(webViewContext);
     }
@@ -50,4 +61,23 @@ public class Contexts {
             ((SupportsContextSwitching) customDriver).context("NATIVE_APP");
         }
     }
+
+    private void waitContext(String context, Duration duration) {
+        long endTime = System.currentTimeMillis() + duration.toMillis();
+        while (System.currentTimeMillis() < endTime) {
+            try {
+                ((SupportsContextSwitching) customDriver).context(context);
+                return;
+            } catch (io.appium.java_client.NoSuchContextException e) {
+                try {
+                    Thread.sleep(350);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+            }
+        }
+        throw new RuntimeException("Context '" + context + "' not found within the specified time.");
+    }
+
 }

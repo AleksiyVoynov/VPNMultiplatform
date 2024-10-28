@@ -9,6 +9,8 @@ import driver.CustomDriver;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
+import java.time.Duration;
+
 public class LogIn extends BasePage {
 
     private Contexts contexts;
@@ -29,7 +31,7 @@ public class LogIn extends BasePage {
 
     @Step("make login")
     public void logIn(String email, String password) {
-        contexts.webViewContext();
+        contexts.webViewContext(Duration.ofSeconds(5));
         fluentVisibility(this.email).sendKeys(email);
         fluentVisibility(this.password).sendKeys(password);
         customDriver.getAppiumDriver().findElement(this.logInButton).click();

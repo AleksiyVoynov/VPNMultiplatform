@@ -17,7 +17,6 @@ public class AndroidConfig {
 
         device.capabilities.setCapability("appium:newCommandTimeout", 0);//todo remove it before push anywhere
         device.capabilities.setCapability("appium:autoWebview", false);
-        device.capabilities.setCapability("appium:autoWebviewTimeout", 2000);
         device.capabilities.setCapability("appium:noReset", true);
 
 
