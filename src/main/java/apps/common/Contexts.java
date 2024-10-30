@@ -10,6 +10,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.SupportsContextSwitching;
 import org.openqa.selenium.remote.DriverCommand;
+import org.testng.Assert;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -43,6 +44,14 @@ public class Contexts {
             waitContext(webViewContext, duration);
         } else if (customDriver.getDevice() instanceof IOS) {
             ((SupportsContextSwitching) customDriver).context(webViewContext);
+        }
+    }
+
+    public void webViewContext(String context, Duration duration) {
+        if (customDriver.getDevice() instanceof Android) {
+            waitContext(context, duration);
+        } else if (customDriver.getDevice() instanceof IOS) {
+            Assert.fail("add realisation for ios");
         }
     }
 

@@ -5,11 +5,10 @@ import configs.devices.Android;
 import configs.devices.IOS;
 import driver.CustomDriver;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.remote.SupportsContextSwitching;
 import io.qameta.allure.Step;
 import org.testng.Assert;
 
-import java.util.ArrayList;
+import java.time.Duration;
 
 public class Browser {
 
@@ -27,7 +26,7 @@ public class Browser {
             AndroidDriver androidDriver = (AndroidDriver) customDriver.getDriver();
             androidDriver.activateApp(chromeApp.appPackage);
 
-            new Contexts(customDriver).webViewContext(chromeApp.webViewContext);
+            new Contexts(customDriver).webViewContext("WEBVIEW_chrome", Duration.ofSeconds(5));
 
         } else if (customDriver.getDevice() instanceof IOS) {
 

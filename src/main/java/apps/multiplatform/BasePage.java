@@ -22,6 +22,8 @@ public class BasePage {
     public final CustomDriver customDriver;
     public final AppiumDriver appiumDriver;
 
+    private final Duration explicit = Duration.ofSeconds(5);
+
     public BasePage(CustomDriver customDriver) {
         this.customDriver = customDriver;
         this.appiumDriver = customDriver.getAppiumDriver();
@@ -40,12 +42,38 @@ public class BasePage {
         return fluentWait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
+    public WebElement fluentPresenceOfElementLocated(By by, Duration timeout) {
+
+        int duration = 500;
+
+        FluentWait<AppiumDriver> fluentWait = new FluentWait<>(appiumDriver)
+                .withTimeout(timeout)
+                .pollingEvery(Duration.ofMillis(duration))
+                .ignoring(NoSuchElementException.class)
+                .ignoring(StaleElementReferenceException.class);
+
+        return fluentWait.until(ExpectedConditions.presenceOfElementLocated(by));
+    }
+
+    public WebElement fluentPresenceOfElementLocated(By by) {
+
+        int duration = 500;
+
+        FluentWait<AppiumDriver> fluentWait = new FluentWait<>(appiumDriver)
+                .withTimeout(explicit)
+                .pollingEvery(Duration.ofMillis(duration))
+                .ignoring(NoSuchElementException.class)
+                .ignoring(StaleElementReferenceException.class);
+
+        return fluentWait.until(ExpectedConditions.presenceOfElementLocated(by));
+    }
+
     public WebElement fluentVisibility(By by) {
 
         int duration = 500;
 
         FluentWait<AppiumDriver> fluentWait = new FluentWait<>(appiumDriver)
-                .withTimeout(Duration.ofSeconds(10))
+                .withTimeout(explicit)
                 .pollingEvery(Duration.ofMillis(duration))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class);
@@ -58,7 +86,7 @@ public class BasePage {
         int duration = 500;
 
         FluentWait<AppiumDriver> fluentWait = new FluentWait<>(appiumDriver)
-                .withTimeout(Duration.ofSeconds(10))
+                .withTimeout(explicit)
                 .pollingEvery(Duration.ofMillis(duration))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class);
@@ -71,7 +99,7 @@ public class BasePage {
         int duration = 500;
 
         FluentWait<AppiumDriver> fluentWait = new FluentWait<>(appiumDriver)
-                .withTimeout(Duration.ofSeconds(10))
+                .withTimeout(explicit)
                 .pollingEvery(Duration.ofMillis(duration))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class);

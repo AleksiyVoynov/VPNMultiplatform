@@ -10,6 +10,6 @@ public class LoginTest extends BaseTest {
     public void JustLogIn() {
         new MainScreen(customDriver)
                 .openMenu()
-                .singIn("nagaraju.batchu7+webExpiredMonthly@gmail.com ", "Test@123");
+                .singIn("leshavoynov@gmail.com", "!testyO87");
     }
 }

@@ -15,8 +15,7 @@ public abstract class Device {
     public DesiredCapabilities capabilities = new DesiredCapabilities();
 
     public Device() {
-        this.capabilities.setCapability("appium:autoWebview", true);
-        this.capabilities.setCapability("appium:autoWebviewTimeout", 300);
+        this.capabilities.setCapability("appium:autoWebviewTimeout", 10000);
     }
 
     @Override

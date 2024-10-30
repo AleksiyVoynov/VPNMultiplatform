@@ -1,19 +1,14 @@
 package apps.multiplatform.temp;
 
 import apps.BaseTest;
-import apps.common.Browser;
-import apps.common.ToggleLTE;
-import apps.multiplatform.pages.mainPage.MainScreen;
-import org.openqa.selenium.By;
 import org.testng.annotations.Test;
-
-import java.time.Duration;
 
 public class TempTest extends BaseTest {
 
+
     @Test()
-    public void Connectivity() {
-        int a = 0;
+    public void Temp() {
+
     }
 
 
