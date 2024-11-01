@@ -2,3 +2,4 @@
 /.idea/**
 /build/**
 /src/main/java/apps/database/
+/src/test/java/apps/multiplatform/temp/

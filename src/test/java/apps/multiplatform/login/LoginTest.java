@@ -1,4 +1,4 @@
-package apps.multiplatform.temp;
+package apps.multiplatform.login;
 
 import apps.BaseTest;
 import apps.pages.multiplatform.mainPage.MainScreen;
