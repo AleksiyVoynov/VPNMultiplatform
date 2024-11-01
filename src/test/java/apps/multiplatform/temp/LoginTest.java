@@ -1,7 +1,7 @@
 package apps.multiplatform.temp;
 
 import apps.BaseTest;
-import apps.multiplatform.pages.mainPage.MainScreen;
+import apps.pages.multiplatform.mainPage.MainScreen;
 import org.testng.annotations.Test;
 
 public class LoginTest extends BaseTest {

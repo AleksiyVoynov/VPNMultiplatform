@@ -1,7 +1,7 @@
-package apps.multiplatform.pages.connection;
+package apps.pages.multiplatform.connection;
 
-import apps.multiplatform.BasePage;
-import apps.multiplatform.pages.mainPage.MainScreen;
+import apps.pages.BasePage;
+import apps.pages.multiplatform.mainPage.MainScreen;
 import driver.CustomDriver;
 import io.appium.java_client.AppiumBy;
 import io.qameta.allure.Step;

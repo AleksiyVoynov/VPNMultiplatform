@@ -1,4 +1,4 @@
-package apps.multiplatform.pages.banners;
+package apps.pages.multiplatform.banners;
 
 import org.openqa.selenium.By;
 

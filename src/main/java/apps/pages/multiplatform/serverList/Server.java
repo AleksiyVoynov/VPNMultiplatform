@@ -1,4 +1,4 @@
-package apps.multiplatform.pages.serverList;
+package apps.pages.multiplatform.serverList;
 
 public class Server {
 

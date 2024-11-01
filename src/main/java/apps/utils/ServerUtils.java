@@ -1,6 +1,6 @@
-package apps.multiplatform.utils;
+package apps.utils;
 
-import apps.multiplatform.pages.serverList.Server;
+import apps.pages.multiplatform.serverList.Server;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

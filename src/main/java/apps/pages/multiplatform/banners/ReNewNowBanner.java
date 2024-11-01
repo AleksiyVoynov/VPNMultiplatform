@@ -1,4 +1,4 @@
-package apps.multiplatform.pages.banners;
+package apps.pages.multiplatform.banners;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;

@@ -1,14 +1,29 @@
 package apps.multiplatform.temp;
 
 import apps.BaseTest;
+import apps.pages.web.SpeedTestResult;
 import org.testng.annotations.Test;
 
-public class TempTest extends BaseTest {
+public class TempTest {
 
 
     @Test()
     public void Temp() {
+        SpeedTestResult result = new SpeedTestResult(
+                "22.2",
+                "33.3",
+                "25",
+                "Host");
 
+        String attachmentTest = """
+                 Mbps Download: %s
+                 Mbps Upload: %s
+                 Latency: %s
+                 Server: %s
+                """.formatted(result.mbpsDownload, result.mbpsUpload, result.latency, result.server);
+        System.out.println(attachmentTest);
+        System.out.println("-------");
+        System.out.println(result);
     }
 
 

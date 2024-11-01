@@ -1,9 +1,9 @@
-package apps.multiplatform.pages.ads;
+package apps.pages.multiplatform.ads;
 
 import driver.CustomDriver;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.By;
-import apps.multiplatform.BasePage;
+import apps.pages.BasePage;
 import org.openqa.selenium.TimeoutException;
 
 import java.util.HashMap;

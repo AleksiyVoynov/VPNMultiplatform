@@ -1,4 +1,4 @@
-package apps.multiplatform.pages.connection;
+package apps.pages.multiplatform.connection;
 
 import driver.CustomDriver;
 import io.appium.java_client.AppiumBy;

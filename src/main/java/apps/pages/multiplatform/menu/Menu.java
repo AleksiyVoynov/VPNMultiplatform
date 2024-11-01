@@ -1,21 +1,15 @@
-package apps.multiplatform.pages.menu;
+package apps.pages.multiplatform.menu;
 
-import apps.multiplatform.BasePage;
-import apps.multiplatform.pages.login.LogIn;
-import apps.multiplatform.pages.mainPage.MainScreen;
+import apps.pages.BasePage;
+import apps.pages.multiplatform.login.LogIn;
+import apps.pages.multiplatform.mainPage.MainScreen;
 import com.google.common.collect.ImmutableMap;
 import configs.devices.Android;
 import configs.devices.IOS;
 import driver.CustomDriver;
 import io.appium.java_client.AppiumBy;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidStartScreenRecordingOptions;
-import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.ios.IOSStartScreenRecordingOptions;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-
-import java.time.Duration;
 
 public class Menu extends BasePage {
     private final CustomDriver customDriver;

@@ -1,6 +1,6 @@
-package apps.multiplatform.pages.ads;
+package apps.pages.multiplatform.ads;
 
-import apps.multiplatform.BasePage;
+import apps.pages.BasePage;
 import driver.CustomDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;

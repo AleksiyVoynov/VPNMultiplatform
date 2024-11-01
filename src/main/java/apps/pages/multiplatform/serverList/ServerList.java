@@ -1,8 +1,8 @@
-package apps.multiplatform.pages.serverList;
+package apps.pages.multiplatform.serverList;
 
 import apps.common.FingerMove;
-import apps.multiplatform.BasePage;
-import apps.multiplatform.pages.connection.ConnectionDetail;
+import apps.pages.BasePage;
+import apps.pages.multiplatform.connection.ConnectionDetail;
 import driver.CustomDriver;
 import io.appium.java_client.AppiumBy;
 import io.qameta.allure.Step;

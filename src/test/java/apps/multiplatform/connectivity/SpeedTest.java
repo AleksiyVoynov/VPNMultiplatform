@@ -2,9 +2,12 @@ package apps.multiplatform.connectivity;
 
 import apps.BaseTest;
 import apps.common.Browser;
-import apps.multiplatform.pages.mainPage.MainScreen;
-import apps.multiplatform.pages.serverList.Server;
+import apps.pages.multiplatform.mainPage.MainScreen;
+import apps.pages.multiplatform.serverList.Server;
+import apps.pages.web.SpeedTestPage;
+import com.sun.source.tree.AssertTree;
 import io.qameta.allure.*;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -62,7 +65,8 @@ public class SpeedTest extends BaseTest {
 
         try {
             browser.goToURL(expectedURL);
-            new apps.wep.pages.SpeedTest(customDriver).runSpeedTest();
+            Assert.assertTrue(new SpeedTestPage(customDriver).runSpeedTest().mbpsDownload > 10,
+                    "the upload speed resul was less then 10 mbps");
         } catch (Throwable e) {
             throw new RuntimeException(e);
         } finally {

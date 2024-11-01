@@ -1,4 +1,4 @@
-package apps.multiplatform.pages.mainPage;
+package apps.pages.multiplatform.mainPage;
 
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.By;

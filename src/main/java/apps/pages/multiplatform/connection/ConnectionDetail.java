@@ -1,6 +1,6 @@
-package apps.multiplatform.pages.connection;
+package apps.pages.multiplatform.connection;
 
-import apps.multiplatform.pages.serverList.Server;
+import apps.pages.multiplatform.serverList.Server;
 import driver.CustomDriver;
 import io.appium.java_client.AppiumBy;
 import io.qameta.allure.Allure;

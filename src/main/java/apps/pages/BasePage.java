@@ -1,4 +1,4 @@
-package apps.multiplatform;
+package apps.pages;
 
 import configs.devices.IOS;
 import driver.CustomDriver;

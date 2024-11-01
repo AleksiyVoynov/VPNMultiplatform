@@ -1,8 +1,7 @@
-package apps.multiplatform.pages.login;
+package apps.pages.multiplatform.login;
 
-import apps.multiplatform.BasePage;
+import apps.pages.BasePage;
 import apps.common.Contexts;
-import configs.app.ChromeApp;
 import configs.devices.Android;
 import configs.devices.IOS;
 import driver.CustomDriver;

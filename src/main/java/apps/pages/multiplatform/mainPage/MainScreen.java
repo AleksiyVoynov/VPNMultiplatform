@@ -1,8 +1,8 @@
-package apps.multiplatform.pages.mainPage;
+package apps.pages.multiplatform.mainPage;
 
-import apps.multiplatform.BasePage;
-import apps.multiplatform.pages.menu.Menu;
-import apps.multiplatform.pages.serverList.ServerList;
+import apps.pages.BasePage;
+import apps.pages.multiplatform.menu.Menu;
+import apps.pages.multiplatform.serverList.ServerList;
 import driver.CustomDriver;
 import io.appium.java_client.AppiumBy;
 import io.qameta.allure.Step;

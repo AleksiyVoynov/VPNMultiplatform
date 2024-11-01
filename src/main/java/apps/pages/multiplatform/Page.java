@@ -1,4 +1,4 @@
-package apps.multiplatform.pages;
+package apps.pages.multiplatform;
 
 public enum Page {
     MAIN_PAGE,
