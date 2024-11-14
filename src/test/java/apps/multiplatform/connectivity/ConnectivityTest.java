@@ -19,7 +19,7 @@ public class ConnectivityTest extends BaseTest {
     private List<Server> servers = new ArrayList<>();
     private int clusters;
 
-    @BeforeClass(description = "check all servers in server list", enabled = false)
+    @BeforeClass(description = "check all servers in server list"/*, enabled = false*/)
     public void precondition() {
         servers = new MainScreen(customDriver)
                 .chooseProtocol()
@@ -38,7 +38,7 @@ public class ConnectivityTest extends BaseTest {
 
     @BeforeClass(description = "range: first, between, middle, between, last")
     public void generateServers2() {
-        servers.add(new Server(0, "ikev2-42 ( 1 )", "ikev2-42"));
+/*        servers.add(new Server(0, "ikev2-42 ( 1 )", "ikev2-42"));
         servers.add(new Server(21, "Germany13 ( 4 )", "Germany60"));
         servers.add(new Server(42, "Germany9 ( 3 )", "Germany35"));
         servers.add(new Server(66, "Netherlands3 ( 5 )", "Netherlands14"));
@@ -46,7 +46,7 @@ public class ConnectivityTest extends BaseTest {
         servers.add(new Server(119, "London ( 5 )", "London4"));
         servers.add(new Server(142, "Singapore3 ( 1 )", "Singapore11"));
         servers.add(new Server(173, "Miami6 ( 5 )", "Miami28"));
-        servers.add(new Server(188, "LosAngeles5 ( 2 )", "LosAngeles16"));
+        servers.add(new Server(188, "LosAngeles5 ( 2 )", "LosAngeles16"));*/
 
         clusters = new MainScreen(customDriver)
                 .chooseProtocol()
