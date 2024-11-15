@@ -28,7 +28,7 @@ public class ServerList extends BasePage {
     public final By freeButton =
             AppiumBy.androidUIAutomator("new UiSelector().text(\"Free\")");
     public final By vipButton =
-            AppiumBy.androidUIAutomator("new UiSelector().text(\"Free\")");
+            AppiumBy.androidUIAutomator("new UiSelector().text(\"VIP\")");
     public final By historyButton =
             AppiumBy.androidUIAutomator("new UiSelector().text(\"History\")");
 
@@ -49,6 +49,13 @@ public class ServerList extends BasePage {
 
     public ServerList(CustomDriver customDriver) {
         super(customDriver);
+    }
+
+    @Step("tap vip")
+    public ServerList tapVip() {
+        pause(Duration.ofMillis(500));
+        fluentVisibility(vipButton).click();
+        return this;
     }
 
     @Step("tap free")

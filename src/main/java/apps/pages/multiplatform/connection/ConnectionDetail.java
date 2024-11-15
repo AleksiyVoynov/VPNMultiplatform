@@ -22,7 +22,7 @@ public class ConnectionDetail extends Connection {
         super(customDriver);
     }
 
-    @Step("validate connection detail page")
+    @Step("connection detail page validation")
     public ConnectionDetail validateConnectionDetailPage(Server server) {
 
         // title block
@@ -66,7 +66,7 @@ public class ConnectionDetail extends Connection {
         return new ConnectionDetail(customDriver);
     }
 
-    @Step("validate connection")
+    @Step("connection page validation")
     public ConnectionDetail validateConnection(Server server) {
         Assert.assertEquals(fluentVisibility(vpnServer).getText(),
                 server.name, "server name was incorrect");

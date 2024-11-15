@@ -21,7 +21,7 @@ public class ConnectionReport extends Connection{
         super(customDriver);
     }
 
-    @Step("validate connection report page")
+    @Step("connection report page validation")
     public ConnectionReport validateConnectionReportPage() {
         Assert.assertEquals(fluentVisibility(titleConnectionReport).getText(),
                 "Connection Report",

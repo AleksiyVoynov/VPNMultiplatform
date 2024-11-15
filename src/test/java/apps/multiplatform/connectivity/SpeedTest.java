@@ -5,7 +5,6 @@ import apps.common.Browser;
 import apps.pages.multiplatform.mainPage.MainScreen;
 import apps.pages.multiplatform.serverList.Server;
 import apps.pages.web.SpeedTestPage;
-import com.sun.source.tree.AssertTree;
 import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
