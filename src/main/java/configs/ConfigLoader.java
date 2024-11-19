@@ -7,7 +7,7 @@ import java.util.Properties;
 public class ConfigLoader {
     public static String getEncryptionServerListKey() {
         Properties properties = new Properties();
-        try (FileInputStream fis = new FileInputStream("config.properties")) {
+        try (FileInputStream fis = new FileInputStream("src/test/resources/config.properties")) {
             properties.load(fis);
             return properties.getProperty("encryptionServerListKey");
         } catch (IOException e) {
@@ -17,7 +17,7 @@ public class ConfigLoader {
 
     public static String getDataBaseKey() {
         Properties properties = new Properties();
-        try (FileInputStream fis = new FileInputStream("config.properties")) {
+        try (FileInputStream fis = new FileInputStream("src/test/resources/config.properties")) {
             properties.load(fis);
             return properties.getProperty("dataBaseKey");
         } catch (IOException e) {
@@ -27,7 +27,7 @@ public class ConfigLoader {
 
     public static String getEmail() {
         Properties properties = new Properties();
-        try (FileInputStream fis = new FileInputStream("config.properties")) {
+        try (FileInputStream fis = new FileInputStream("src/test/resources/config.properties")) {
             properties.load(fis);
             return properties.getProperty("email");
         } catch (IOException e) {
@@ -37,7 +37,7 @@ public class ConfigLoader {
 
     public static String getDataBaseURL() {
         Properties properties = new Properties();
-        try (FileInputStream fis = new FileInputStream("config.properties")) {
+        try (FileInputStream fis = new FileInputStream("src/test/resources/config.properties")) {
             properties.load(fis);
             return properties.getProperty("dataBaseURL");
         } catch (IOException e) {
@@ -47,7 +47,7 @@ public class ConfigLoader {
 
     public static String getDataBaseUser() {
         Properties properties = new Properties();
-        try (FileInputStream fis = new FileInputStream("config.properties")) {
+        try (FileInputStream fis = new FileInputStream("src/test/resources/config.properties")) {
             properties.load(fis);
             return properties.getProperty("dataBaseUser");
         } catch (IOException e) {
@@ -57,7 +57,7 @@ public class ConfigLoader {
 
     public static String getDataBasePassword() {
         Properties properties = new Properties();
-        try (FileInputStream fis = new FileInputStream("config.properties")) {
+        try (FileInputStream fis = new FileInputStream("src/test/resources/config.properties")) {
             properties.load(fis);
             return properties.getProperty("dataBasePassword");
         } catch (IOException e) {

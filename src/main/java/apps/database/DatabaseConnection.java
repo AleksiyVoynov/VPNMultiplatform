@@ -1,7 +1,5 @@
 package apps.database;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
