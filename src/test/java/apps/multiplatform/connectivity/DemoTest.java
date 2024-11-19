@@ -78,7 +78,7 @@ public class DemoTest extends BaseTest {
                 "the upload speed result (" + result + ") was less then 10 Mbps");
     }
 
-    @Test(priority = 1, description = "check connection speed >= 100 Mbps")
+    @Test(priority = 2, description = "check connection speed >= 100 Mbps")
     @Severity(SeverityLevel.CRITICAL)
     @Story("User: VIP, Protocol: IKEv2")
     @Description("""
