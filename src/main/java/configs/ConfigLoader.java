@@ -1,5 +1,7 @@
 package configs;
 
+import apps.pages.multiplatform.login.User;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -25,11 +27,11 @@ public class ConfigLoader {
         }
     }
 
-    public static String getEmail() {
+    public static String getDataBaseEmail() {
         Properties properties = new Properties();
         try (FileInputStream fis = new FileInputStream("src/test/resources/config.properties")) {
             properties.load(fis);
-            return properties.getProperty("email");
+            return properties.getProperty("dataBaseEmail");
         } catch (IOException e) {
             throw new RuntimeException("Failed to load email from config.properties", e);
         }
@@ -60,6 +62,16 @@ public class ConfigLoader {
         try (FileInputStream fis = new FileInputStream("src/test/resources/config.properties")) {
             properties.load(fis);
             return properties.getProperty("dataBasePassword");
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load password from config.properties", e);
+        }
+    }
+
+    public static User getMyUser() {
+        Properties properties = new Properties();
+        try (FileInputStream fis = new FileInputStream("src/test/resources/config.properties")) {
+            properties.load(fis);
+            return new User(properties.getProperty("myEmail"), properties.getProperty("myPassword"));
         } catch (IOException e) {
             throw new RuntimeException("Failed to load password from config.properties", e);
         }

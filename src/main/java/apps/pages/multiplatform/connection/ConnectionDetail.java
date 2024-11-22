@@ -70,6 +70,18 @@ public class ConnectionDetail extends Connection {
     public ConnectionDetail validateConnection(Server server) {
         Assert.assertEquals(fluentVisibility(vpnServer).getText(),
                 server.name, "server name was incorrect");
+         return validateConnection();
+    }
+
+    @Step("connection page validation")
+    public ConnectionDetail validateConnection(apps.api.serverList.Server server) {
+        Assert.assertEquals(fluentVisibility(vpnServer).getText(),
+                server.getAliasName(), "server name was incorrect");
+        return validateConnection();
+    }
+
+
+    public ConnectionDetail validateConnection() {
 
         String vpnIp = appiumDriver.findElement(ip).getText();
         Assert.assertFalse(vpnIp.isEmpty(), "VPN IP didn't displayed");

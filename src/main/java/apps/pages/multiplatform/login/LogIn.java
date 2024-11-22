@@ -29,10 +29,10 @@ public class LogIn extends BasePage {
     }
 
     @Step("make login")
-    public void logIn(String email, String password) {
+    public void logIn(User user) {
         contexts.webViewContext(Duration.ofSeconds(5));
-        fluentVisibility(this.email).sendKeys(email);
-        fluentVisibility(this.password).sendKeys(password);
+        fluentVisibility(this.email).sendKeys(user.email);
+        fluentVisibility(this.password).sendKeys(user.password);
         customDriver.getAppiumDriver().findElement(this.logInButton).click();
         contexts.nativeContext();
     }

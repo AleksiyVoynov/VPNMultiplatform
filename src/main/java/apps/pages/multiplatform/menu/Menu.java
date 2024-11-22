@@ -2,6 +2,7 @@ package apps.pages.multiplatform.menu;
 
 import apps.pages.BasePage;
 import apps.pages.multiplatform.login.LogIn;
+import apps.pages.multiplatform.login.User;
 import apps.pages.multiplatform.mainPage.MainScreen;
 import com.google.common.collect.ImmutableMap;
 import configs.devices.Android;
@@ -31,7 +32,7 @@ public class Menu extends BasePage {
     }
 
     @Step("sign in")
-    public MainScreen singIn(String login, String password) {
+    public MainScreen singIn(User user) {
         if (customDriver.getDevice() instanceof Android) {
             appiumDriver.executeScript("mobile: shell", ImmutableMap.of("command", "am force-stop com.android.chrome"));
         } else if (customDriver.getDevice() instanceof IOS) {
@@ -39,7 +40,7 @@ public class Menu extends BasePage {
         }
 
         fluentVisibility(signIn).click();
-        new LogIn(customDriver).logIn(login, password);
+        new LogIn(customDriver).logIn(user);
         return new MainScreen(customDriver);
     }
 }

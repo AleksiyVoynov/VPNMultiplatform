@@ -55,5 +55,13 @@ public class Server {
     public void setLoad(int load) {
         this.load = load;
     }
+
+    @Override
+    public String toString() {
+        return "Server{" +
+                "country name='" + country_name + '\'' +
+                ", server name='" + alias_name + '\'' +
+                '}';
+    }
 }
 

@@ -7,7 +7,7 @@ import static configs.ConfigLoader.*;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        System.out.println("HMAC-SHA512 result: " + new Encoder(getEmail(), getDataBaseKey()).encode());
+        System.out.println("HMAC-SHA512 result: " + new Encoder(getDataBaseEmail(), getDataBaseKey()).encode());
 
 /*        Credentials credentials = new Credentials(
                 getDataBaseURL(),

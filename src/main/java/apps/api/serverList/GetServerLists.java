@@ -23,7 +23,7 @@ public class GetServerLists {
     private String getServerListRaw() throws Exception {
         RestAssured.baseURI = "https://prod-api.mobilejump.mobi";
 
-        // Отправка запроса и получение зашифрованного ответа
+        // Sending a request and receiving an encrypted response
         Response response = given()
                 .queryParam("platform", "android")
                 .queryParam("vip", "true")
@@ -36,36 +36,27 @@ public class GetServerLists {
                 .extract()
                 .response();
 
-        // Расшифровка ответа
+        // Decoding the answer
         ResponseDecoder decoder = new ResponseDecoder(response, getEncryptionServerListKey());
         return decoder.decode();
     }
 
     private List<Server> getFreeServers(String response) {
-        // Преобразуем JSON только в нужные блоки
+        // Transform JSON into only the required blocks
         Gson gson = new Gson();
         ServerResponse serverResponse = gson.fromJson(response, ServerResponse.class);
 
-        // Возвращаем только бесплатные серверы
+        // We return only free servers
         return serverResponse.getServers();
     }
 
     private List<Server> getVipServers(String response) {
-        // Преобразуем JSON только в нужные блоки
+        // Transform JSON into only the required blocks
         Gson gson = new Gson();
         ServerResponse serverResponse = gson.fromJson(response, ServerResponse.class);
 
-        // Возвращаем только VIP-серверы
+        // We are returning only VIP servers
         return serverResponse.getVipServers();
-    }
-
-    public static void main(String[] args) throws Exception {
-        GetServerLists getServerLists = new GetServerLists();
-
-        List<Server> freeServers = getServerLists.freeServers;
-        List<Server> vipServers = getServerLists.vipServers;
-
-        int a = 0;
     }
 }
 

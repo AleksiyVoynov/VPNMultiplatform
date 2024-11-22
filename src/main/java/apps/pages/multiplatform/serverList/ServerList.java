@@ -13,6 +13,7 @@ import org.testng.Assert;
 
 import java.time.Duration;
 import java.util.*;
+import java.util.function.BiPredicate;
 
 public class ServerList extends BasePage {
 
@@ -223,6 +224,21 @@ public class ServerList extends BasePage {
         }
     }
 
+    public WebElement findServer(apps.api.serverList.Server server) {
+       return scrollDown(server.getAliasName(), (currentGroupName, result) -> {
+            if (!(result.contains("(") || result.contains(")"))) {
+                return currentGroupName.equals(result);
+            }
+            return false;
+        });
+    }
+
+
+    private WebElement scrollDown(apps.api.serverList.Server server) {
+        new FingerMove(appiumDriver).doSwipe(0.5, 0.8, 0.5, 0.66);
+
+        return scrollDown(server.getCountryName(), String::contains);
+    }
 
     private WebElement scrollDown(Server server) {
         new FingerMove(appiumDriver).doSwipe(0.5, 0.8, 0.5, 0.66);
@@ -230,15 +246,21 @@ public class ServerList extends BasePage {
         //find groups
         WebElement listID = appiumDriver.findElement(this.listID);
         List<WebElement> serverGroups = listID.findElements(this.serverGroups);
-
         //scroll to needed element +-
         for (int i = 0; i < server.clusterIndex / (serverGroups.size() - 1); i++) {
             new FingerMove(appiumDriver)
                     .doSwipe(0.5, 0.8, 0.5, 0.31);
             pause(Duration.ofMillis(500));
         }
+        return scrollDown(server.cluster, String::equals);
+    }
 
-        //get group
+    public WebElement scrollDown(String server, BiPredicate<String, String> condition) {
+        // Найти группы
+        WebElement listID = appiumDriver.findElement(this.listID);
+        List<WebElement> serverGroups = listID.findElements(this.serverGroups);
+
+        // Получить первую группу
         WebElement currentGroup = serverGroups.get(0);
         String serverName = currentGroup.findElement(this.serverName).getText();
 
@@ -246,10 +268,8 @@ public class ServerList extends BasePage {
         String currentGroupName = "";
 
         while (checkHasMoreGroups(serverName)) {
-            //find groups
+            // Найти обновленные группы
             serverGroups = appiumDriver.findElement(this.listID).findElements(this.serverGroups);
-
-
 
             for (WebElement serverGroup : serverGroups) {
                 try {
@@ -259,7 +279,8 @@ public class ServerList extends BasePage {
                             .doSwipe(0.5, 0.8, 0.5, 0.75);
                     continue;
                 }
-                if (currentGroupName.equals(server.cluster)) {
+                // Применить переданную логику
+                if (condition.test(currentGroupName, server)) {
                     return serverGroup;
                 }
             }
@@ -271,7 +292,7 @@ public class ServerList extends BasePage {
                 break;
             }
         }
-        Assert.fail("can't find cluster with name " + server.cluster);
+        Assert.fail("can't find name " + server);
         return null;
     }
 
@@ -382,5 +403,14 @@ public class ServerList extends BasePage {
         }
 
         return serverNames;
+    }
+
+    //new realisation for server list ------------------------------------------------------------------------
+
+    @Step("select server")
+    public ConnectionDetail selectServer(apps.api.serverList.Server server) {
+        scrollDown(server).findElement(button).click();
+        findServer(server).click();
+        return new ConnectionDetail(customDriver);
     }
 }
