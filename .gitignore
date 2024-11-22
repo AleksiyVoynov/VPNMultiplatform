@@ -1,4 +1,4 @@
 /.gradle/**
 /.idea/**
 /build/**
-/src/test/java/apps/multiplatform/TempTest
+/src/test/java/apps/multiplatform/TempTest.java
