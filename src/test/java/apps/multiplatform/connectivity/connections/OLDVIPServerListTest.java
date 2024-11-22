@@ -1,4 +1,4 @@
-package apps.multiplatform.connectivity;
+package apps.multiplatform.connectivity.connections;
 
 import apps.BaseTest;
 import apps.pages.multiplatform.mainPage.MainScreen;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Epic("Connectivity tests")
-public class ConnectivityTest extends BaseTest {
+public class OLDVIPServerListTest extends BaseTest {
 
     private List<Server> servers = new ArrayList<>();
     private int clusters;

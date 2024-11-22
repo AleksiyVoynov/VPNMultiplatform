@@ -1,4 +1,4 @@
-package apps.multiplatform.connectivity;
+package apps.multiplatform;
 
 import apps.BaseTest;
 import apps.common.Browser;
