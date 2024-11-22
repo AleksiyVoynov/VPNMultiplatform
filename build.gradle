@@ -61,6 +61,8 @@ test {
     ignoreFailures = true
     useTestNG()
     jvmArgs = [ "-javaagent:${configurations.agent.singleFile}" ]
+    systemProperty 'device.OSVersion', project.hasProperty('OSVersion') ? project.getProperty('OSVersion') : 'default'
+    systemProperty 'device.uDID', project.hasProperty('uDID') ? project.getProperty('uDID') : 'default'
 }
 
 /*tasks.register('parallelTest', Test) {

@@ -10,7 +10,7 @@ public abstract class Device {
     public String device;
     public String model;
     public String name;
-    public String platformVersion;
+    public String version;
     public String uDID;
     public DesiredCapabilities capabilities = new DesiredCapabilities();
 
@@ -27,7 +27,8 @@ public abstract class Device {
                 ", device='" + device + '\'' +
                 ", model='" + model + '\'' +
                 ", name='" + name + '\'' +
-                ", platformVersion='" + platformVersion + '\'' +
+                ", platformVersion='" + version + '\'' +
+                ", uDID='" + uDID + '\'' +
                 '}';
     }
 }

@@ -10,10 +10,10 @@ public class IOS extends Device {
         this.origin = "simulator";
         this.device = deviceName;
         this.model = model;
-        this.platformVersion = version;
+        this.version = version;
         this.uDID = uDID;
 
-        this.capabilities.setCapability("appium:platformVersion", platformVersion);
+        this.capabilities.setCapability("appium:platformVersion", version);
         this.capabilities.setCapability("appium:udid", uDID);
         this.capabilities.setCapability("appium:deviceName", name);
         this.capabilities.setCapability("appium:xcodeSigningId", "iPhone Developer");

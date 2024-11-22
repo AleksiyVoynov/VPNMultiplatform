@@ -32,8 +32,8 @@ public class BaseTest implements IHookable {
     private Device device = new Android(
             "SAMSUNG",
             "SSM-A356B",
-            "14",
-            "R5CX72VNK6H",
+            System.getProperty("device.OSVersion", "14"),
+            System.getProperty("device.uDID", "R5CX72VNK6H"),
             new MultiPlatformVPN());
 
 /*    private Device device = new IOS(
