@@ -20,7 +20,6 @@ public class VIPServerListTest extends BaseTest {
     public void precondition() throws Exception {
 
         servers = new GetServerLists().vipServers;
-        servers = servers.subList(0, 101);
 
         Allure.addAttachment("number of servers", String.valueOf(servers.size()));
     }
