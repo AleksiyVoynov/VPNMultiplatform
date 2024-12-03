@@ -256,11 +256,11 @@ public class ServerList extends BasePage {
     }
 
     public WebElement scrollDown(String server, BiPredicate<String, String> condition) {
-        // Найти группы
+        // find groups
         WebElement listID = appiumDriver.findElement(this.listID);
         List<WebElement> serverGroups = listID.findElements(this.serverGroups);
 
-        // Получить первую группу
+        // get first group
         WebElement currentGroup = serverGroups.get(0);
         String serverName = currentGroup.findElement(this.serverName).getText();
 
@@ -268,7 +268,7 @@ public class ServerList extends BasePage {
         String currentGroupName = "";
 
         while (checkHasMoreGroups(serverName)) {
-            // Найти обновленные группы
+            // find updated group
             serverGroups = appiumDriver.findElement(this.listID).findElements(this.serverGroups);
 
             for (WebElement serverGroup : serverGroups) {
@@ -279,7 +279,7 @@ public class ServerList extends BasePage {
                             .doSwipe(0.5, 0.8, 0.5, 0.75);
                     continue;
                 }
-                // Применить переданную логику
+                // Apply the passed logic
                 if (condition.test(currentGroupName, server)) {
                     return serverGroup;
                 }

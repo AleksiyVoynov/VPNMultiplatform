@@ -1,6 +1,7 @@
 package apps.multiplatform.login;
 
 import apps.BaseTest;
+import apps.pages.multiplatform.login.User;
 import apps.pages.multiplatform.mainPage.MainScreen;
 import org.testng.annotations.Test;
 
@@ -12,6 +13,6 @@ public class LoginTest extends BaseTest {
     public void JustLogIn() {
         new MainScreen(customDriver)
                 .openMenu()
-                .singIn(getMyUser());
+                .singIn(new User("nagaraju.batchu7+webExpiredMonthly@gmail.com", "Test@123"));
     }
 }
