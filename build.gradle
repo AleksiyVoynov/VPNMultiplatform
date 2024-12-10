@@ -58,6 +58,12 @@ dependencies {
 }
 
 test {
+    // Отображать стандартный вывод в консоль
+    testLogging {
+        events "passed", "skipped", "failed"
+        showStandardStreams = true
+    }
+
     ignoreFailures = true
     useTestNG()
     jvmArgs = [ "-javaagent:${configurations.agent.singleFile}" ]

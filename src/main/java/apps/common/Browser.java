@@ -21,7 +21,7 @@ public class Browser {
     @Step("open browser")
     public void openMobileBrowser() {
         if (customDriver.getDevice() instanceof Android) {
-            ChromeApp chromeApp = new ChromeApp(customDriver);
+            ChromeApp chromeApp = new ChromeApp();
 
             AndroidDriver androidDriver = (AndroidDriver) customDriver.getDriver();
             androidDriver.activateApp(chromeApp.appPackage);
