@@ -2,9 +2,9 @@ package apps.multiplatform.connectivity;
 
 import apps.BaseTest;
 import apps.common.Browser;
-import apps.pages.multiplatform.mainPage.MainScreen;
-import apps.pages.multiplatform.serverList.Server;
-import apps.pages.web.SpeedTestPage;
+import apps.multiplatform.pages.multiplatform.mainPage.MainScreen;
+import apps.multiplatform.pages.multiplatform.serverList.Server;
+import apps.multiplatform.pages.web.SpeedTestPage;
 import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;

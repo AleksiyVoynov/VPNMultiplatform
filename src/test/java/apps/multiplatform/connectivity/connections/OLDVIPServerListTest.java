@@ -1,9 +1,9 @@
 package apps.multiplatform.connectivity.connections;
 
 import apps.BaseTest;
-import apps.pages.multiplatform.mainPage.MainScreen;
-import apps.pages.multiplatform.serverList.Server;
-import apps.utils.ServerUtils;
+import apps.multiplatform.pages.multiplatform.mainPage.MainScreen;
+import apps.multiplatform.pages.multiplatform.serverList.Server;
+import apps.multiplatform.utils.ServerUtils;
 import io.qameta.allure.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;

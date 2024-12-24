@@ -1,6 +1,6 @@
 package configs;
 
-import apps.pages.multiplatform.login.User;
+import apps.multiplatform.pages.multiplatform.login.User;
 
 import java.io.FileInputStream;
 import java.io.IOException;
