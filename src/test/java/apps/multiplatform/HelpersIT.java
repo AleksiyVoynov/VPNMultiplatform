@@ -6,13 +6,13 @@ import apps.pages.multiplatform.mainPage.MainScreen;
 import apps.pages.playStore.SubscriptionsPage;
 import org.testng.annotations.Test;
 
-public class Helpers extends BaseTest {
+public class HelpersIT extends BaseTest {
 
     @Test()
     public void logIn() {
         new MainScreen(customDriver)
                 .openMenu()
-                .singIn(new User("nagaraju.batchu7+webExpiredMonthly@gmail.com", "Test@123"));
+                .singIn(new User("nagaraju+android@superunlimited.com", "Test@123"));
     }
 
     @Test()

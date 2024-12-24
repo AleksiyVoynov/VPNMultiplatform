@@ -5,18 +5,14 @@ import io.appium.java_client.AppiumBy;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
-import java.time.Duration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SubscriptionsPage extends PlayStorePage {
 
-/*    private final By userIcon = AppiumBy.androidUIAutomator("new UiSelector().description(\"Signed in as Oleksii Voinov oleksii@superunlimited.com\n" +
-            "Account and settings.\")");*/
     private final By userIcon = AppiumBy.androidUIAutomator("new UiSelector().descriptionContains(\"Signed in as\")");
     private final By paymentsSubscription = AppiumBy.androidUIAutomator("new UiSelector().text(\"Payments & subscriptions\")");
     private final By subscriptionMenu = AppiumBy.androidUIAutomator("new UiSelector().text(\"Subscriptions\")");
-    //private final By activeSubscription = AppiumBy.androidUIAutomator("new UiSelector().className(\"android.view.View\").instance(2)");
     private final By activeSubscription = AppiumBy.androidUIAutomator("new UiSelector().textContains(\"Super Unlimited Proxy\")");
     private final By cancelButton = AppiumBy.androidUIAutomator("new UiSelector().text(\"Cancel subscription\")");
     private final By noThanksButton = AppiumBy.androidUIAutomator("new UiSelector().text(\"No thanks\")");
